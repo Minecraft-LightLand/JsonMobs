@@ -23,9 +23,6 @@ public interface DataType<T> {
 
 	String name();
 
-	@Nullable
-	DataEntry<T> get(String config);
-
 	T parse(ParserLogger logger, StringElement.ListElem elem);
 
 }

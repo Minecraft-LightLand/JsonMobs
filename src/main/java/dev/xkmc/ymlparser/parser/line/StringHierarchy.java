@@ -1,24 +1,45 @@
 package dev.xkmc.ymlparser.parser.line;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public enum StringHierarchy {
-	DQ(Type.STRING, '"', '"', '\0'),
-	SQ(Type.STRING, '\'', '\'', '\0'),
-	C(Type.DATA, '{', '}', ';'),
-	B(Type.DATA, '[', ']', ','),
-	A(Type.VAR, '<', '>', '.'),
-	NONE(Type.NONE, '\0', '\0', ' ');
+	DQ(Type.STRING, '"', '"', ""),
+	SQ(Type.STRING, '\'', '\'', ""),
+	C(Type.DATA, '{', '}', ";"),
+	B(Type.LIST, '[', ']', ",-"),
+	A(Type.VAR, '<', '>', "."),
+	NONE(Type.NONE, '\0', '\0', " ");
 
-	final Type type;
-	final char left, right, split;
+	public final Type type;
+	final char left, right;
+	final char[] split;
 
-	StringHierarchy(Type type, char left, char right, char split) {
+	StringHierarchy(Type type, char left, char right, String split) {
 		this.type = type;
 		this.left = left;
 		this.right = right;
-		this.split = split;
+		this.split = split.toCharArray();
 	}
 
-	enum Type {
-		NONE, STRING, DATA, VAR
+	boolean isImplicit() {
+		return this == NONE;
+	}
+
+	@Nullable
+	StringHierarchy bundling() {
+		return this == B ? NONE : null;
+	}
+
+	List<StringHierarchy> allowedSubs() {
+		return switch (type) {
+			case VAR, LIST -> List.of();
+			case STRING -> List.of(A);
+			case DATA, NONE -> List.of(DQ, SQ, C, B, A);
+		};
+	}
+
+	public enum Type {
+		NONE, STRING, LIST, DATA, VAR
 	}
 }

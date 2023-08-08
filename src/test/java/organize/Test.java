@@ -19,7 +19,7 @@ public class Test {
 		@Override
 		public void enter(@NotNull StringElement elem) {
 			level++;
-			String builder = "  ".repeat(level) + elem + " - " + elem.getClass().getSimpleName();
+			String builder = "| ".repeat(level) + elem + " - " + elem.getClass().getSimpleName();
 			System.out.println(builder);
 		}
 
@@ -32,7 +32,7 @@ public class Test {
 	public static void main(String[] args) throws Exception {
 		File file = new File("./src/test/resources/test.yaml");
 		YamlElement node = YamlParser.readYaml(new FileInputStream(file));
-		String str = node.asMap().getMap("Data").getList("Param").list.get(0).asString().toString();
+		String str = node.asMap().getMap("Data").getList("Param").list.get(4).asString().toString();
 		System.out.println(str);
 		StringElement.build(str).build(new DebugVisitor());
 		OutputStream w = new FileOutputStream("./src/test/resources/out.yaml");

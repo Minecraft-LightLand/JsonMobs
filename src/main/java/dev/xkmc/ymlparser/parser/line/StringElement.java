@@ -162,7 +162,7 @@ public abstract class StringElement {
 			ListElem prev = null;
 			for (ListElem elem : list) {
 				if (prev != null) {
-					builder.append(hierarchy.split);
+					builder.append(hierarchy.split[0]);
 				}
 				elem.build(builder);
 				prev = elem;
@@ -189,19 +189,27 @@ public abstract class StringElement {
 		private final Hierarchy root = new Hierarchy(0, StringHierarchy.NONE);
 		private final Stack<Hierarchy> stack = new Stack<>();
 
+		private Hierarchy fake = null;
+
 		Builder() {
 			stack.push(root);
 		}
 
 		public void append(int index, char val) {
+			realizeFake();
 			stack.peek().getList(index).append(index, val);
 		}
 
 		public void end() {
+			if (fake != null) {
+				fake = null;
+				return;
+			}
 			stack.pop();
 		}
 
 		public void start(int start, StringHierarchy h) {
+			realizeFake();
 			Hierarchy elem = new Hierarchy(start, h);
 			stack.peek().getList(start).add(elem);
 			stack.push(elem);
@@ -212,7 +220,19 @@ public abstract class StringElement {
 		}
 
 		public void appendEscape(int index, char val, char next) {
+			realizeFake();
 			stack.peek().getList(index).appendEscape(index, val, next);
+		}
+
+		private void realizeFake() {
+			if (fake == null) return;
+			Hierarchy h = fake;
+			fake = null;
+			start(h.start, h.hierarchy);
+		}
+
+		public void fakeStart(int index, StringHierarchy h) {
+			fake = new Hierarchy(index, h);
 		}
 	}
 

@@ -42,11 +42,18 @@ public class CharSupplier {
 	private void start(StringHierarchy h) {
 		stack.push(h);
 		ans.start(index, h);
+		if (h.bundling() != null) {
+			stack.push(h.bundling());
+			ans.fakeStart(index, h);
+		}
 	}
 
 	private void end() {
-		stack.pop();
+		var e = stack.pop();
 		ans.end();
+		if (e.isImplicit() && stack.size() > 0) {
+			end();
+		}
 	}
 
 	private boolean transformState(char ch) {
@@ -57,41 +64,44 @@ public class CharSupplier {
 				return false;
 			}
 		}
-		if (stack.peek().split != '\0') {
-			if (ch == stack.peek().split) {
+		for (char sp : stack.peek().split) {
+			if (ch == sp) {
 				ans.split();
 				return true;
 			}
 		}
-		if (stack.peek().type == StringHierarchy.Type.VAR) {
-			if (stack.peek().right == ch) {
-				end();
-				return true;
-			}
-			return false;
-		} else if (stack.peek().type == StringHierarchy.Type.STRING) {
-			if (ch == StringHierarchy.A.left) {
-				start(StringHierarchy.A);
-				return true;
-			} else if (stack.peek().right == ch) {
-				end();
-				return true;
-			}
-			return false;
-		} else {
-			if (!stack.isEmpty() && stack.peek().right == ch) {
-				end();
-				return true;
-			} else {
-				for (StringHierarchy t : StringHierarchy.values()) {
-					if (t.left != '\0' && ch == t.left) {
-						start(t);
-						return true;
-					}
+		if (stack.peek().isImplicit() && stack.size() > 1) {
+			var prev = stack.elementAt(stack.size() - 2);
+			for (char sp : prev.split) {
+				if (ch == sp) {
+					ans.end();
+					ans.split();
+					ans.start(index, stack.peek());
+					return true;
 				}
 			}
+		}
+		if (stack.peek().right == ch) {
+			end();
+			return true;
+		}
+		if (stack.peek().type == StringHierarchy.Type.VAR) {
 			return false;
 		}
+		if (stack.peek().isImplicit() && stack.size() > 1) {
+			var prev = stack.elementAt(stack.size() - 2);
+			if (prev.right == ch) {
+				end();
+				return true;
+			}
+		}
+		for (StringHierarchy t : stack.peek().allowedSubs()) {
+			if (t.left != '\0' && ch == t.left) {
+				start(t);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public StringElement.Builder parseString() {

@@ -11,7 +11,6 @@ public interface IterableType<T> extends DataType<T> {
 	Collection<String> getAllKeys();
 
 	@Nullable
-	@Override
 	SupplierEntry<T> get(String config);
 
 	@Override

@@ -16,11 +16,6 @@ public record CollectionDataType<T>(DataType<T> type) implements DataType<Collec
 	}
 
 	@Override
-	public DataEntry<Collection<T>> get(String str) {
-		return new CollectionDataEntry<>(type);
-	}
-
-	@Override
 	public Collection<T> parse(ParserLogger logger, StringElement.ListElem elem) {
 		if (elem.list.size() != 1 || !(elem.list.get(0) instanceof StringElement.Hierarchy hier) || hier.hierarchy != StringHierarchy.B) {
 			logger.fatal("value should be a list value, found " + elem);
@@ -31,10 +26,6 @@ public record CollectionDataType<T>(DataType<T> type) implements DataType<Collec
 			ans.add(type.parse(logger, e));
 		}
 		return ans;
-	}
-
-	public record CollectionDataEntry<T>(DataType<T> type) implements DataEntry<Collection<T>> {
-
 	}
 
 }
