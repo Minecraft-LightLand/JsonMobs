@@ -1,10 +1,10 @@
-package dev.xkmc.jsonmobs.init;
+package dev.xkmc.ymlmobs.init;
 
 import com.tterrag.registrate.providers.ProviderType;
-import dev.xkmc.jsonmobs.init.data.*;
-import dev.xkmc.jsonmobs.init.loot.JMGLMProvider;
-import dev.xkmc.jsonmobs.init.registrate.JMItems;
-import dev.xkmc.jsonmobs.init.registrate.JMMiscs;
+import dev.xkmc.ymlmobs.init.data.*;
+import dev.xkmc.ymlmobs.init.loot.YMGLMProvider;
+import dev.xkmc.ymlmobs.init.registrate.YMItems;
+import dev.xkmc.ymlmobs.init.registrate.YMMiscs;
 import dev.xkmc.l2library.base.L2Registrate;
 import dev.xkmc.l2library.serial.config.PacketHandlerWithConfig;
 import net.minecraft.data.PackOutput;
@@ -20,11 +20,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(JsonMobs.MODID)
-@Mod.EventBusSubscriber(modid = JsonMobs.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class JsonMobs {
+@Mod(YmlMobs.MODID)
+@Mod.EventBusSubscriber(modid = YmlMobs.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class YmlMobs {
 
-	public static final String MODID = "l2hostility";
+	public static final String MODID = "ymlmobs";
 	public static final PacketHandlerWithConfig HANDLER = new PacketHandlerWithConfig(
 			new ResourceLocation(MODID, "main"), 1
 	);
@@ -33,11 +33,11 @@ public class JsonMobs {
 
 	private static void registerRegistrates(IEventBus bus) {
 		ForgeMod.enableMilkFluid();
-		JMItems.register();
-		JMMiscs.register();
-		JMConfig.init();
+		YMItems.register();
+		YMMiscs.register();
+		YMConfig.init();
 
-		JMGLMProvider.register();
+		YMGLMProvider.register();
 
 		REGISTRATE.addDataGenerator(ProviderType.LANG, LangData::addTranslations);
 		REGISTRATE.addDataGenerator(ProviderType.RECIPE, RecipeGen::genRecipe);
@@ -46,7 +46,7 @@ public class JsonMobs {
 		REGISTRATE.addDataGenerator(ProviderType.ENTITY_TAGS, TagGen::onEntityTagGen);
 	}
 
-	public JsonMobs() {
+	public YmlMobs() {
 		FMLJavaModLoadingContext ctx = FMLJavaModLoadingContext.get();
 		IEventBus bus = ctx.getModEventBus();
 		registerRegistrates(bus);
@@ -66,8 +66,8 @@ public class JsonMobs {
 		var pvd = event.getLookupProvider();
 		var helper = event.getExistingFileHelper();
 		var gen = event.getGenerator();
-		gen.addProvider(server, new JMConfigGen(gen));
-		gen.addProvider(server, new JMGLMProvider(gen));
+		gen.addProvider(server, new YMConfigGen(gen));
+		gen.addProvider(server, new YMGLMProvider(gen));
 	}
 
 }

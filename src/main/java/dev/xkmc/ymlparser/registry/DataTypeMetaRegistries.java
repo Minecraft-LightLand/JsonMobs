@@ -1,6 +1,7 @@
 package dev.xkmc.ymlparser.registry;
 
 import dev.xkmc.l2serial.util.Wrappers;
+import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.type.DataType;
 import dev.xkmc.ymlparser.type.EnumType;
 import dev.xkmc.ymlparser.type.ForgeRegistryType;
@@ -16,7 +17,16 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DataTypeMetaRegistries {
 
-	public static final Map<Class<?>, DataType<?>> HANDLERS = new ConcurrentHashMap<>();
+	private static final Map<Class<?>, DataType<?>> HANDLERS = new ConcurrentHashMap<>();
+	private static final Map<Class<?>, DataType<DataHolder<?>>> HOLDERS = new ConcurrentHashMap<>();
+
+	public static <T> void registerDataType(Class<T> cls, DataType<T> type) {
+		HANDLERS.put(cls, type);
+	}
+
+	public static <T> void registerHolderType(Class<T> cls, DataType<DataHolder<T>> type) {
+		HANDLERS.put(cls, type);
+	}
 
 	static {
 		regRegistry(Block.class, ForgeRegistries.BLOCKS);
@@ -26,7 +36,7 @@ public class DataTypeMetaRegistries {
 	}
 
 	private static <T> void regRegistry(Class<T> cls, IForgeRegistry<T> reg) {
-		HANDLERS.put(cls, new ForgeRegistryType<>(cls, reg));
+		registerDataType(cls, new ForgeRegistryType<>(cls, reg));
 	}
 
 	public static DataType<?> get(Class<?> type) {
@@ -39,4 +49,10 @@ public class DataTypeMetaRegistries {
 		throw new IllegalStateException("failed to find DataType for class " + type.getSimpleName());
 	}
 
+	public static DataType<DataHolder<?>> getHolder(Class<?> cls) {
+		if (HOLDERS.containsKey(cls)) {
+			return HOLDERS.get(cls);
+		}
+		throw new IllegalStateException("failed to find Holder DataType for class " + cls.getSimpleName());
+	}
 }

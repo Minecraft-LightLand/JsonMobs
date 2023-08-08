@@ -1,7 +1,7 @@
-package dev.xkmc.jsonmobs.init.data;
+package dev.xkmc.ymlmobs.init.data;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
-import dev.xkmc.jsonmobs.init.JsonMobs;
+import dev.xkmc.ymlmobs.init.YmlMobs;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
@@ -22,7 +22,7 @@ public enum LangData {
 	public MutableComponent get(Object... objs) {
 		if (objs.length != count)
 			throw new IllegalArgumentException("for " + name() + ": expect " + count + " parameters, got " + objs.length);
-		return translate(JsonMobs.MODID + "." + id, objs);
+		return translate(YmlMobs.MODID + "." + id, objs);
 	}
 
 
@@ -30,7 +30,7 @@ public enum LangData {
 		for (LangData id : LangData.values()) {
 			String[] strs = id.id.split("\\.");
 			String str = strs[strs.length - 1];
-			pvd.add(JsonMobs.MODID + "." + id.id, id.def);
+			pvd.add(YmlMobs.MODID + "." + id.id, id.def);
 		}
 	}
 

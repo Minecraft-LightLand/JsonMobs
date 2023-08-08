@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.jsonmobs.init.loot;
+package dev.xkmc.ymlmobs.init.data;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

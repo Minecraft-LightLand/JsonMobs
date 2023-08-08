@@ -1,12 +1,12 @@
-package dev.xkmc.jsonmobs.init.data;
+package dev.xkmc.ymlmobs.init.data;
 
 import dev.xkmc.l2library.serial.config.ConfigDataProvider;
 import net.minecraft.data.DataGenerator;
 
-public class JMConfigGen extends ConfigDataProvider {
+public class YMConfigGen extends ConfigDataProvider {
 
 
-	public JMConfigGen(DataGenerator generator) {
+	public YMConfigGen(DataGenerator generator) {
 		super(generator, "JsonMobs Config");
 	}
 

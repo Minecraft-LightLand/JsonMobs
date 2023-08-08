@@ -1,7 +1,7 @@
 package dev.xkmc.ymlparser.registry;
 
 import com.google.gson.internal.LinkedTreeMap;
-import dev.xkmc.jsonmobs.init.JsonMobs;
+import dev.xkmc.ymlmobs.init.YmlMobs;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -28,13 +28,13 @@ public class DataTypeRegistry<T> implements IDataTypeRegistry<T> {
 			boolean prevMain = id.equals(prev.id());
 			if (currentMain) {
 				if (prevMain) {
-					JsonMobs.LOGGER.fatal("Conflicting main keys: " + id + ", aborting");
+					YmlMobs.LOGGER.fatal("Conflicting main keys: " + id + ", aborting");
 					throw new IllegalArgumentException("Conflicting main keys: " + id);
 				} else {
-					JsonMobs.LOGGER.error("Conflicting keys: " + id + ", overwriting alias of " + prev.id());
+					YmlMobs.LOGGER.error("Conflicting keys: " + id + ", overwriting alias of " + prev.id());
 				}
 			} else {
-				JsonMobs.LOGGER.error("Conflicting keys: " + id + ", skipping alias of " + entry.id());
+				YmlMobs.LOGGER.error("Conflicting keys: " + id + ", skipping alias of " + entry.id());
 				return;
 			}
 		}

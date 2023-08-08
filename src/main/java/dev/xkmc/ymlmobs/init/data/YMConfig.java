@@ -1,4 +1,4 @@
-package dev.xkmc.jsonmobs.init.data;
+package dev.xkmc.ymlmobs.init.data;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -6,7 +6,7 @@ import net.minecraftforge.fml.config.IConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class JMConfig {
+public class YMConfig {
 
 	public static class Client {
 

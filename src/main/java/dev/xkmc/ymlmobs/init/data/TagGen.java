@@ -1,8 +1,8 @@
-package dev.xkmc.jsonmobs.init.data;
+package dev.xkmc.ymlmobs.init.data;
 
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
-import dev.xkmc.jsonmobs.init.JsonMobs;
+import dev.xkmc.ymlmobs.init.YmlMobs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -22,7 +22,7 @@ public class TagGen {
 	}
 
 	public static TagKey<EntityType<?>> createEntityTag(String id) {
-		return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), new ResourceLocation(JsonMobs.MODID, id));
+		return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), new ResourceLocation(YmlMobs.MODID, id));
 	}
 
 }

@@ -1,11 +1,11 @@
-package dev.xkmc.jsonmobs.init.data;
+package dev.xkmc.ymlmobs.init.data;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import dev.xkmc.jsonmobs.init.JsonMobs;
+import dev.xkmc.ymlmobs.init.YmlMobs;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -31,22 +31,22 @@ public class RecipeGen {
 
 	@SuppressWarnings("ConstantConditions")
 	private static ResourceLocation getID(Enchantment item) {
-		return new ResourceLocation(JsonMobs.MODID, currentFolder + ForgeRegistries.ENCHANTMENTS.getKey(item).getPath());
+		return new ResourceLocation(YmlMobs.MODID, currentFolder + ForgeRegistries.ENCHANTMENTS.getKey(item).getPath());
 	}
 
 	@SuppressWarnings("ConstantConditions")
 	private static ResourceLocation getID(Enchantment item, String suffix) {
-		return new ResourceLocation(JsonMobs.MODID, currentFolder + ForgeRegistries.ENCHANTMENTS.getKey(item).getPath() + suffix);
+		return new ResourceLocation(YmlMobs.MODID, currentFolder + ForgeRegistries.ENCHANTMENTS.getKey(item).getPath() + suffix);
 	}
 
 	@SuppressWarnings("ConstantConditions")
 	private static ResourceLocation getID(Item item) {
-		return new ResourceLocation(JsonMobs.MODID, currentFolder + ForgeRegistries.ITEMS.getKey(item).getPath());
+		return new ResourceLocation(YmlMobs.MODID, currentFolder + ForgeRegistries.ITEMS.getKey(item).getPath());
 	}
 
 	@SuppressWarnings("ConstantConditions")
 	private static ResourceLocation getID(Item item, String suffix) {
-		return new ResourceLocation(JsonMobs.MODID, currentFolder + ForgeRegistries.ITEMS.getKey(item).getPath() + suffix);
+		return new ResourceLocation(YmlMobs.MODID, currentFolder + ForgeRegistries.ITEMS.getKey(item).getPath() + suffix);
 	}
 
 	private static void storage(RegistrateRecipeProvider pvd, ItemEntry<?> nugget, ItemEntry<?> ingot, BlockEntry<?> block) {

@@ -1,4 +1,4 @@
-package dev.xkmc.jsonmobs.util;
+package dev.xkmc.ymlmobs.util;
 
 public interface ILevelPos {
 

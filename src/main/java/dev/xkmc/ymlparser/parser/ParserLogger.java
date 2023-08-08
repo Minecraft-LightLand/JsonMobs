@@ -1,6 +1,6 @@
 package dev.xkmc.ymlparser.parser;
 
-import dev.xkmc.jsonmobs.init.JsonMobs;
+import dev.xkmc.ymlmobs.init.YmlMobs;
 
 public interface ParserLogger {
 
@@ -52,12 +52,12 @@ public interface ParserLogger {
 
 		@Override
 		default void error(int i, String s) {
-			JsonMobs.LOGGER.error("Error occurs in file %s line %d column %d: ".formatted(file(), line(), i) + s);
+			YmlMobs.LOGGER.error("Error occurs in file %s line %d column %d: ".formatted(file(), line(), i) + s);
 		}
 
 		@Override
 		default void fatal(int index, String s) {
-			JsonMobs.LOGGER.fatal("Fatal error occurs in file %s line %d column %d: ".formatted(file(), line(), index) + s);
+			YmlMobs.LOGGER.fatal("Fatal error occurs in file %s line %d column %d: ".formatted(file(), line(), index) + s);
 			throw new IllegalArgumentException(s);
 		}
 
