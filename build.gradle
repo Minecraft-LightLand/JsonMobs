@@ -154,6 +154,9 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    flatDir {
+        dirs 'reflibs'
+    }
     maven { url 'https://jitpack.io' }
     maven {
         // Location of the maven that hosts JEI files (and TiC)
@@ -192,6 +195,16 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:attributefix-280510:4588114")
     runtimeOnly fg.deobf("curse.maven:bookshelf-228525:4581675")
     runtimeOnly fg.deobf("curse.maven:enchantment-descriptions-250419:4587429")
+
+    minecraftLibrary(jarJar("org.yaml:snakeyaml:1.23")){
+        transitive = false
+        jarJar.ranged(it, "[1.23,)")
+    }
+
+    minecraftLibrary(jarJar("net.objecthunter:exp4j:0.4.8")){
+        transitive = false
+        jarJar.ranged(it, "[0.4.8,)")
+    }
 
     runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:4599236")
 

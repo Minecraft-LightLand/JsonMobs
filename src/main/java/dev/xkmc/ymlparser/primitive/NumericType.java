@@ -5,9 +5,9 @@ import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.parser.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.parser.line.StringHierarchy;
+import dev.xkmc.ymlparser.primitive.calc.Functions;
+import dev.xkmc.ymlparser.primitive.calc.Operators;
 import dev.xkmc.ymlparser.type.DataType;
-import io.lumine.mythic.core.utils.math.Functions;
-import io.lumine.mythic.core.utils.math.Operators;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
@@ -42,13 +42,22 @@ public class NumericType<T> implements DataType<DataHolder<T>> {
 				}
 			}
 		}
+		if (elem.list.size() == 1 && elem.list.get(0) instanceof StringElement.StrElem str) {
+			String num = str.toString();
+
+		}
 		StringBuilder builder = new StringBuilder();
-		Map<String, VariableHolder> vars = new LinkedHashMap<>();
+		Map<String, NumericVariable> vars = new LinkedHashMap<>();
 		for (var e : elem.list) {
 			if (e instanceof StringElement.Hierarchy hier) {
 				if (hier.hierarchy == StringHierarchy.A) {
-
-					//TODO fill function
+					NumericVariable holder = NumericVariable.of(hier.list);
+					if (holder == null) {
+						logger.error(hier.start, "Invalid variable " + hier + ", replaced with 0");
+						holder = x -> 0;
+					}
+					String name = "p" + vars.size();
+					vars.put(name, holder);
 				} else {
 					logger.fatal(hier.start, "Invalid structure " + hier + " as number");
 				}
@@ -69,7 +78,7 @@ public class NumericType<T> implements DataType<DataHolder<T>> {
 	}
 
 	public record NumericHolder<T>(NumericType<T> type, Expression exp,
-								   Map<String, VariableHolder> vars) implements DataHolder<T> {
+								   Map<String, NumericVariable> vars) implements DataHolder<T> {
 
 		@Override
 		public T get(DataContext meta) {

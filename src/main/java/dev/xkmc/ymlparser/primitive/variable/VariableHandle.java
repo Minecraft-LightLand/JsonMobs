@@ -1,0 +1,16 @@
+package dev.xkmc.ymlparser.primitive.variable;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface VariableHandle {
+
+	String name();
+
+	String[] alias() default {};
+
+}
