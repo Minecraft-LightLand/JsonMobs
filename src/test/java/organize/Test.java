@@ -1,10 +1,14 @@
 package organize;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dev.xkmc.ymlparser.parser.line.StringElement;
+import dev.xkmc.ymlparser.parser.wrapper.YamlElement;
+import dev.xkmc.ymlparser.parser.wrapper.YamlParser;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.util.Scanner;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Test {
 
@@ -15,7 +19,7 @@ public class Test {
 		@Override
 		public void enter(@NotNull StringElement elem) {
 			level++;
-			String builder = "  ".repeat(level) + elem.toString() + " - " + elem.getClass().getSimpleName();
+			String builder = "  ".repeat(level) + elem + " - " + elem.getClass().getSimpleName();
 			System.out.println(builder);
 		}
 
@@ -26,10 +30,17 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws Exception {
-		File file = new File("./src/test/resources/test.txt");
-		String str = new Scanner(file).nextLine();
+		File file = new File("./src/test/resources/test.yaml");
+		YamlElement node = YamlParser.readYaml(new FileInputStream(file));
+		String str = node.asMap().getMap("Data").getList("Param").list.get(0).asString().toString();
 		System.out.println(str);
 		StringElement.build(str).build(new DebugVisitor());
+		OutputStream w = new FileOutputStream("./src/test/resources/out.yaml");
+		YamlParser.writeYaml(node, w);
+		FileWriter fw = new FileWriter("./src/test/resources/out.json", StandardCharsets.UTF_8);
+		Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().disableHtmlEscaping().create();
+		fw.write(gson.toJson(node.asJson()));
+		fw.close();
 	}
 
 }

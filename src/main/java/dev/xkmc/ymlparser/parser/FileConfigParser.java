@@ -1,15 +1,17 @@
 package dev.xkmc.ymlparser.parser;
 
-import io.lumine.mythic.bukkit.utils.config.file.YamlConfiguration;
+import org.yaml.snakeyaml.Yaml;
 
 public class FileConfigParser {
 
-	public FileConfigParser(YamlConfiguration yamlConfiguration) {
+	private static final Yaml YAML = new Yaml();
+
+	public FileConfigParser() {
 
 	}
 
 	public static FileConfigParser of() {
-		return new FileConfigParser(new YamlConfiguration());
+		return new FileConfigParser();
 	}
 
 }

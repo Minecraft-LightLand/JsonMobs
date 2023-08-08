@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DataTypeMetaRegistries {
 
-	private static final Map<Class<?>, DataType<?>> HANDLERS = new ConcurrentHashMap<>();
+	public static final Map<Class<?>, DataType<?>> HANDLERS = new ConcurrentHashMap<>();
 
 	static {
 		regRegistry(Block.class, ForgeRegistries.BLOCKS);

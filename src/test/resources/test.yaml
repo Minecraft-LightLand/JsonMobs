@@ -1,0 +1,7 @@
+Data:
+  Param:
+  - run a{stck=stick{};b=[1,2,3,4,5,];;;c="<abc.def> <= 1",d="[][\t&s)[)"} <1
+  - 0
+  - null
+  - []
+  -
