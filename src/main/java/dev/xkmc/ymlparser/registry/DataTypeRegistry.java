@@ -4,6 +4,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import dev.xkmc.ymlmobs.init.YmlMobs;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +40,11 @@ public class DataTypeRegistry<T> implements IDataTypeRegistry<T> {
 			}
 		}
 		map.put(id, entry);
+	}
+
+	@Override
+	public Collection<String> getAllKeys() {
+		return reverseMap.values();
 	}
 
 	@Nullable

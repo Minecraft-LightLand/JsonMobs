@@ -6,6 +6,14 @@ import java.util.Stack;
 
 public abstract class StringElement {
 
+	public static ListElem wrapSimple(int start, String s) {
+		ListElem elem = new ListElem(start);
+		StrElem str = new StrElem(start);
+		str.builder.append(s);
+		elem.list.add(str);
+		return elem;
+	}
+
 	public interface Visitor {
 
 		default void enter(StringElement elem) {

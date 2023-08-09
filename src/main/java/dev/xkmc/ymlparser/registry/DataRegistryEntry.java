@@ -1,5 +1,12 @@
 package dev.xkmc.ymlparser.registry;
 
-public record DataRegistryEntry<T>(String id, T val, String... alias) {
+import dev.xkmc.ymlparser.type.IterableType;
+
+public record DataRegistryEntry<T>(String id, T val, String... alias) implements IterableType.SupplierEntry<T> {
+
+	@Override
+	public T parse() {
+		return val;
+	}
 
 }

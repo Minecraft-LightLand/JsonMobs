@@ -17,6 +17,16 @@ public record CollectionDataType<T>(DataType<T> type) implements DataType<Collec
 
 	@Override
 	public Collection<T> parse(ParserLogger logger, StringElement.ListElem elem) {
+		if (elem.list.size() == 1 && elem.list.get(0) instanceof StringElement.StrElem str) {
+			String[] strs = str.toString().split(",");
+			List<T> ans = new ArrayList<>();
+			int index = 0;
+			for (String s : strs) {
+				ans.add(type.parse(logger, StringElement.wrapSimple(str.start + index, s)));
+				index += s.length() + 1;
+			}
+			return ans;
+		}
 		if (elem.list.size() != 1 || !(elem.list.get(0) instanceof StringElement.Hierarchy hier) || hier.hierarchy != StringHierarchy.B) {
 			logger.fatal("value should be a list value, found " + elem);
 			throw new IllegalStateException("unreachable");

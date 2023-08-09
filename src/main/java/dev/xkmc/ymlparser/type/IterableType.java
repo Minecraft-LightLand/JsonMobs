@@ -28,7 +28,7 @@ public interface IterableType<T> extends DataType<T> {
 		return entry.parse();
 	}
 
-	interface SupplierEntry<T> extends DataEntry<T> {
+	interface SupplierEntry<T> {
 
 		T parse();
 
