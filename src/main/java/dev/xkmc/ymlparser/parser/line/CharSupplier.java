@@ -4,18 +4,6 @@ import java.util.Stack;
 
 public class CharSupplier {
 
-	private int parseEscape(char ch) {
-		return switch (ch) {
-			case '\\' -> '\\';
-			case '"' -> '"';
-			case '\'' -> '\'';
-			case 'n' -> '\n';
-			case 'r' -> '\r';
-			case 't' -> '\t';
-			default -> -1;
-		};
-	}
-
 	private final String str;
 	private final Stack<StringHierarchy> stack = new Stack<>();
 	private final StringElement.Builder ans = new StringElement.Builder();
@@ -27,11 +15,11 @@ public class CharSupplier {
 		stack.push(StringHierarchy.NONE);
 	}
 
-	private boolean isEmpty() {
+	boolean isEmpty() {
 		return index >= str.length();
 	}
 
-	private char pop() {
+	char pop() {
 		return str.charAt(index++);
 	}
 
@@ -60,7 +48,7 @@ public class CharSupplier {
 		if (ch == '<') {
 			if (isEmpty()) return false;
 			char next = peek();
-			if (!('a' <= next && next <= 'z' || 'A' <= next && next <= 'Z' || next == '_')) {
+			if (!('a' <= next && next <= 'z' || 'A' <= next && next <= 'Z' || next == '_' || next == '&')) {
 				return false;
 			}
 		}
@@ -112,12 +100,7 @@ public class CharSupplier {
 					throw new IllegalStateException("invalid line escape at end of string " + str);
 				} else {
 					char next = pop();
-					int val = parseEscape(next);
-					if (val < 0) {
-						throw new IllegalStateException("invalid escape char " + next + " at " + index + " of string " + str);
-					} else {
-						ans.appendEscape(index, (char) val, next);
-					}
+					ans.appendEscape(index, EscapeHelper.parseEscape(next, this), next);
 				}
 			} else if (!transformState(ch)) {
 				ans.append(index, ch);

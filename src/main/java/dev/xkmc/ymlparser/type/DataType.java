@@ -2,11 +2,10 @@ package dev.xkmc.ymlparser.type;
 
 import dev.xkmc.l2serial.serialization.type_cache.TypeInfo;
 import dev.xkmc.ymlparser.holder.DataHolder;
-import dev.xkmc.ymlparser.parser.ParserLogger;
+import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.registry.DataTypeMetaRegistries;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 
 public interface DataType<T> {

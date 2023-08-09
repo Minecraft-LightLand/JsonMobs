@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.ymlparser.parser;
+package dev.xkmc.ymlparser.primitive.core;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

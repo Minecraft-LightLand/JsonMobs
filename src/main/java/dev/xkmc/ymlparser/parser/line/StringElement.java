@@ -56,7 +56,7 @@ public abstract class StringElement {
 		}
 
 		private void appendEscape(int index, char val, char next) {
-			list.add(new Escape(index, val, next));
+			list.add(new EscapeElem(index, val, next));
 		}
 
 		private void add(Hierarchy elem) {
@@ -72,6 +72,9 @@ public abstract class StringElement {
 			builder.exit(this);
 		}
 
+		/**
+		 * same as substring(i), but for elements
+		 */
 		public ListElem subElem(int i) {
 			ListElem ans = new ListElem(start + i);
 			ans.list.addAll(list);
@@ -84,6 +87,20 @@ public abstract class StringElement {
 				ans.list.set(0, str);
 			}
 			return ans;
+		}
+
+		/**
+		 * try to unwrap this element if it has only one hierarchical element of a specific type
+		 */
+		public ListElem tryUnwrap(StringHierarchy.Type type) {
+			if (list.size() == 1 && list.get(0) instanceof StringElement.Hierarchy hier) {
+				if (hier.hierarchy.type == type) {
+					if (hier.list.size() == 1) {
+						return hier.list.get(0);
+					}
+				}
+			}
+			return this;
 		}
 	}
 
@@ -117,12 +134,12 @@ public abstract class StringElement {
 
 	}
 
-	public static class Escape extends StringElement {
+	public static class EscapeElem extends StringElement {
 
-		private final int val;
+		private final char val;
 		private final char text;
 
-		public Escape(int start, int val, char text) {
+		public EscapeElem(int start, char val, char text) {
 			super(start);
 			this.val = val;
 			this.text = text;
@@ -133,6 +150,9 @@ public abstract class StringElement {
 			builder.enter(this);
 			builder.append('\\');
 			builder.append(text);
+			if (text == 'u') {
+				builder.append("%04x".formatted((int) val));
+			}
 			builder.exit(this);
 		}
 

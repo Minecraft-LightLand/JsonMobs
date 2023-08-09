@@ -1,4 +1,4 @@
-package dev.xkmc.ymlparser.primitive.variable;
+package dev.xkmc.ymlmobs.content.variables.builtin;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;

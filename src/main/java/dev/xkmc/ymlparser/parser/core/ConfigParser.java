@@ -1,4 +1,4 @@
-package dev.xkmc.ymlparser.parser;
+package dev.xkmc.ymlparser.parser.core;
 
 import dev.xkmc.ymlparser.parser.line.StringElement;
 

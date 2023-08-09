@@ -1,4 +1,4 @@
-package dev.xkmc.ymlparser.primitive;
+package dev.xkmc.ymlparser.primitive.core;
 
 import dev.xkmc.ymlparser.holder.DataContext;
 import dev.xkmc.ymlparser.holder.DataHolder;

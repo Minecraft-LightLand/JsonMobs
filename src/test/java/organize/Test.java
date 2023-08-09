@@ -30,6 +30,11 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("abc{0}def{1}ghi{2}".formatted("A", "B", "C"));
+	}
+
+	private static void testParse() throws Exception {
+
 		File file = new File("./src/test/resources/test.yaml");
 		YamlElement node = YamlParser.readYaml(new FileInputStream(file));
 		String str = node.asMap().getMap("Data").getList("Param").list.get(4).asString().toString();

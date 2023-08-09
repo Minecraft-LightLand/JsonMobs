@@ -2,6 +2,8 @@ package dev.xkmc.ymlparser.registry;
 
 import dev.xkmc.l2serial.util.Wrappers;
 import dev.xkmc.ymlparser.holder.DataHolder;
+import dev.xkmc.ymlparser.primitive.core.DoubleType;
+import dev.xkmc.ymlparser.primitive.core.IntType;
 import dev.xkmc.ymlparser.type.DataType;
 import dev.xkmc.ymlparser.type.EnumType;
 import dev.xkmc.ymlparser.type.ForgeRegistryType;
@@ -18,17 +20,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataTypeMetaRegistries {
 
 	private static final Map<Class<?>, DataType<?>> HANDLERS = new ConcurrentHashMap<>();
-	private static final Map<Class<?>, DataType<DataHolder<?>>> HOLDERS = new ConcurrentHashMap<>();
+	private static final Map<Class<?>, DataType<?>> HOLDERS = new ConcurrentHashMap<>();
 
 	public static <T> void registerDataType(Class<T> cls, DataType<T> type) {
 		HANDLERS.put(cls, type);
 	}
 
 	public static <T> void registerHolderType(Class<T> cls, DataType<DataHolder<T>> type) {
-		HANDLERS.put(cls, type);
+		HOLDERS.put(cls, type);
 	}
 
 	static {
+		registerHolderType(Integer.class, new IntType("int"));
+		registerHolderType(Double.class, new DoubleType("double"));
+
 		regRegistry(Block.class, ForgeRegistries.BLOCKS);
 		regRegistry(Item.class, ForgeRegistries.ITEMS);
 		regRegistry(Potion.class, ForgeRegistries.POTIONS);
@@ -39,19 +44,19 @@ public class DataTypeMetaRegistries {
 		registerDataType(cls, new ForgeRegistryType<>(cls, reg));
 	}
 
-	public static DataType<?> get(Class<?> type) {
+	public static <T> DataType<T> get(Class<T> type) {
 		if (HANDLERS.containsKey(type)) {
-			return HANDLERS.get(type);
+			return Wrappers.cast(HANDLERS.get(type));
 		}
 		if (type.isEnum()) {
-			return EnumType.of(Wrappers.cast(type));
+			return Wrappers.cast(EnumType.of(Wrappers.cast(type)));
 		}
 		throw new IllegalStateException("failed to find DataType for class " + type.getSimpleName());
 	}
 
-	public static DataType<DataHolder<?>> getHolder(Class<?> cls) {
+	public static <T> DataType<DataHolder<T>> getHolder(Class<T> cls) {
 		if (HOLDERS.containsKey(cls)) {
-			return HOLDERS.get(cls);
+			return Wrappers.cast(HOLDERS.get(cls));
 		}
 		throw new IllegalStateException("failed to find Holder DataType for class " + cls.getSimpleName());
 	}

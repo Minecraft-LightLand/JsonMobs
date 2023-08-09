@@ -1,4 +1,4 @@
-package dev.xkmc.ymlparser.parser;
+package dev.xkmc.ymlparser.parser.core;
 
 import org.yaml.snakeyaml.Yaml;
 

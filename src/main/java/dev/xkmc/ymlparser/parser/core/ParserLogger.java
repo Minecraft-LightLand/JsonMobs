@@ -1,8 +1,16 @@
-package dev.xkmc.ymlparser.parser;
+package dev.xkmc.ymlparser.parser.core;
 
 import dev.xkmc.ymlmobs.init.YmlMobs;
+import dev.xkmc.ymlparser.parser.line.StringElement;
 
 public interface ParserLogger {
+
+	static ParserLogger of(ParserLogger logger, StringElement elem) {
+		while (logger instanceof Sub sub) {
+			logger = sub.parent();
+		}
+		return new SubElem(logger, elem);
+	}
 
 	void error(String s);
 
@@ -61,6 +69,14 @@ public interface ParserLogger {
 			throw new IllegalArgumentException(s);
 		}
 
+	}
+
+	record SubElem(ParserLogger parent, StringElement elem) implements Sub {
+
+		@Override
+		public int defaultIndex() {
+			return elem.start;
+		}
 	}
 
 }
