@@ -9,7 +9,7 @@ import dev.xkmc.ymlparser.primitive.calc.NumericExpressionHolder;
 import dev.xkmc.ymlparser.primitive.calc.Operators;
 import dev.xkmc.ymlparser.primitive.variable.NumericVariable;
 import dev.xkmc.ymlparser.primitive.variable.VariableContext;
-import dev.xkmc.ymlparser.type.DataType;
+import dev.xkmc.ymlparser.type.HolderDataTypeImpl;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public abstract class NumericType<T> implements DataType<DataHolder<T>> {
+public abstract class NumericType<T> extends HolderDataTypeImpl<T> {
 
 	private static final String PATTERN_NUM = "[0-9e.+-]+";
 	private static final String PATTERN_RANGE = "[0-9e.+-]+to[0-9e.+-]+";
@@ -47,15 +47,13 @@ public abstract class NumericType<T> implements DataType<DataHolder<T>> {
 		return null;
 	}
 
-	private final String name;
-
 	public NumericType(String name) {
-		this.name = name;
+		super(name);
 	}
 
 	@Override
-	public String name() {
-		return name;
+	public T parseStatic(ParserLogger logger, StringElement.ListElem elem) {
+		return null;//TODO
 	}
 
 	@Override

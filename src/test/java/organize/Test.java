@@ -30,7 +30,7 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("abc{0}def{1}ghi{2}".formatted("A", "B", "C"));
+		System.out.println("abc%sdef%sghi%s".formatted("A", "B", "C"));
 	}
 
 	private static void testParse() throws Exception {

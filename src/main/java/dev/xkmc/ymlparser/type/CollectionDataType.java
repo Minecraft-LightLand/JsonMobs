@@ -23,7 +23,11 @@ public record CollectionDataType<T>(DataType<T> type) implements DataType<Collec
 		}
 		List<T> ans = new ArrayList<>();
 		for (var e : hier.list) {
-			ans.add(type.parse(logger, e));
+			if (type instanceof MetaDataType<T> meta) {
+				ans.add(meta.parse(logger, e));
+			} else {
+				ans.add(type.parse(logger, e.tryUnwrap(StringHierarchy.Type.NONE)));
+			}
 		}
 		return ans;
 	}

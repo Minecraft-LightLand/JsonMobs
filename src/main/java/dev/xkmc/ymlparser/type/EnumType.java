@@ -18,6 +18,7 @@ public final class EnumType<T extends Enum<T>> implements IterableType<T> {
 
 	private final String name;
 	private final Map<String, T> map;
+	private final HolderDataType<T> holder;
 
 	private EnumType(Class<T> cls) {
 		this.name = cls.getSimpleName();
@@ -25,6 +26,7 @@ public final class EnumType<T extends Enum<T>> implements IterableType<T> {
 		for (T t : cls.getEnumConstants()) {
 			map.put(t.name(), t);
 		}
+		holder = HolderDataType.wrap(this);
 	}
 
 	@Override
@@ -38,6 +40,10 @@ public final class EnumType<T extends Enum<T>> implements IterableType<T> {
 		T val = map.get(str);
 		if (val == null) return null;
 		return new Entry<>(this, val);
+	}
+
+	public HolderDataType<T> asHolder() {
+		return holder;
 	}
 
 	@Override

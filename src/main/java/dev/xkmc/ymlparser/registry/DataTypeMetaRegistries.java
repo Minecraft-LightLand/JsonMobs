@@ -4,12 +4,14 @@ import dev.xkmc.l2serial.util.Wrappers;
 import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.primitive.core.DoubleType;
 import dev.xkmc.ymlparser.primitive.core.IntType;
-import dev.xkmc.ymlparser.type.DataType;
-import dev.xkmc.ymlparser.type.EnumType;
-import dev.xkmc.ymlparser.type.ForgeRegistryType;
+import dev.xkmc.ymlparser.primitive.core.StringType;
+import dev.xkmc.ymlparser.type.*;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -20,27 +22,33 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataTypeMetaRegistries {
 
 	private static final Map<Class<?>, DataType<?>> HANDLERS = new ConcurrentHashMap<>();
-	private static final Map<Class<?>, DataType<?>> HOLDERS = new ConcurrentHashMap<>();
+	private static final Map<Class<?>, HolderDataType<?>> HOLDERS = new ConcurrentHashMap<>();
 
 	public static <T> void registerDataType(Class<T> cls, DataType<T> type) {
 		HANDLERS.put(cls, type);
+		HOLDERS.put(cls, HolderDataType.wrap(type));
 	}
 
-	public static <T> void registerHolderType(Class<T> cls, DataType<DataHolder<T>> type) {
+	public static <T> void registerHolderType(Class<T> cls, HolderDataTypeImpl<T> type) {
 		HOLDERS.put(cls, type);
+		HANDLERS.put(cls, type.asStaticType());
 	}
 
 	static {
 		registerHolderType(Integer.class, new IntType("int"));
 		registerHolderType(Double.class, new DoubleType("double"));
+		registerHolderType(String.class, new StringType("String"));
 
 		regRegistry(Block.class, ForgeRegistries.BLOCKS);
 		regRegistry(Item.class, ForgeRegistries.ITEMS);
 		regRegistry(Potion.class, ForgeRegistries.POTIONS);
 		regRegistry(MobEffect.class, ForgeRegistries.MOB_EFFECTS);
+		regRegistry(Enchantment.class, ForgeRegistries.ENCHANTMENTS);
+		regRegistry(EntityType.class, ForgeRegistries.ENTITY_TYPES);
+		regRegistry(Attribute.class, ForgeRegistries.ATTRIBUTES);
 	}
 
-	private static <T> void regRegistry(Class<T> cls, IForgeRegistry<T> reg) {
+	private static <T extends R, R> void regRegistry(Class<R> cls, IForgeRegistry<T> reg) {
 		registerDataType(cls, new ForgeRegistryType<>(cls, reg));
 	}
 
@@ -57,6 +65,9 @@ public class DataTypeMetaRegistries {
 	public static <T> DataType<DataHolder<T>> getHolder(Class<T> cls) {
 		if (HOLDERS.containsKey(cls)) {
 			return Wrappers.cast(HOLDERS.get(cls));
+		}
+		if (cls.isEnum()) {
+			return Wrappers.cast(EnumType.of(Wrappers.cast(cls)).asHolder());
 		}
 		throw new IllegalStateException("failed to find Holder DataType for class " + cls.getSimpleName());
 	}

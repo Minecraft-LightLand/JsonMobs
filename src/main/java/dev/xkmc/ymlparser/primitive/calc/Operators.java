@@ -1,4 +1,3 @@
-
 package dev.xkmc.ymlparser.primitive.calc;
 
 import net.objecthunter.exp4j.operator.Operator;

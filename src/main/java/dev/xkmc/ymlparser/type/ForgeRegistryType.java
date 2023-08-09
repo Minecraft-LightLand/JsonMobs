@@ -9,13 +9,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class ForgeRegistryType<T> implements IterableType<T> {
+public class ForgeRegistryType<R extends T, T> implements IterableType<T> {
 
-	private final IForgeRegistry<T> registry;
+	private final IForgeRegistry<R> registry;
 	private final Lazy<List<String>> keys;
 	private final String name;
 
-	public ForgeRegistryType(Class<T> cls, IForgeRegistry<T> registry) {
+	public ForgeRegistryType(Class<T> cls, IForgeRegistry<R> registry) {
 		this.name = cls.getSimpleName();
 		this.registry = registry;
 		this.keys = Lazy.of(() -> this.registry.getKeys().stream().map(ResourceLocation::toString).toList());
@@ -39,7 +39,7 @@ public class ForgeRegistryType<T> implements IterableType<T> {
 		return keys.get();
 	}
 
-	private record Entry<T>(ForgeRegistryType<T> type, ResourceLocation id, T val) implements SupplierEntry<T> {
+	private record Entry<T>(ForgeRegistryType<?, T> type, ResourceLocation id, T val) implements SupplierEntry<T> {
 
 		@Override
 		public T parse() {

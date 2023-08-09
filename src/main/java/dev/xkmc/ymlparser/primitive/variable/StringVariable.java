@@ -1,4 +1,9 @@
 package dev.xkmc.ymlparser.primitive.variable;
 
-public class StringVariable {
+import dev.xkmc.ymlparser.holder.DataContext;
+
+public interface StringVariable {
+
+	String parse(DataContext meta);
+
 }
