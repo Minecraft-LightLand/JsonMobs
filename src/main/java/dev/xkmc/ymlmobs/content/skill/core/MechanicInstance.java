@@ -1,13 +1,11 @@
 package dev.xkmc.ymlmobs.content.skill.core;
 
-import com.google.common.collect.Maps;
+import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
 import dev.xkmc.ymlparser.argument.Argument;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class MechanicInstance {
 
@@ -55,6 +53,7 @@ public class MechanicInstance {
 		public void setChance(Double chance) {
 			this.chance = chance;
 		}
+
 	}
 
 	public static MechanicInstance of(SkillMechanic type) {
@@ -65,6 +64,7 @@ public class MechanicInstance {
 		return new MechanicInstance.Builder(type);
 	}
 
+	protected final SkillMechanic mechanic;
 	@Nullable
 	protected final SkillTargeter targeter;
 	protected final SkillTrigger trigger;
@@ -74,7 +74,6 @@ public class MechanicInstance {
 	protected final List<ConditionInstance> conditionsTarget;
 	protected final List<ConditionInstance> conditionsTrigger;
 
-	protected boolean executeAfterDeath = false;
 
 	@Argument(name = "forceSync", aliases = {"sync"}, optional = true, description = "Sets the execution of the mechanic to the main thread instead of async.")
 	protected boolean forceSync = false;
@@ -86,13 +85,15 @@ public class MechanicInstance {
 	@Argument(name = "origin", optional = true, description = "Sets the origin of the skill")
 	protected SkillTargeter originOverride = null;
 
-	protected final Map<UUID, Long> cooldowns = Maps.newConcurrentMap();
-	
+	//protected final Map<UUID, Long> cooldowns = Maps.newConcurrentMap();
+	//protected boolean executeAfterDeath = false;
+
 	private MechanicInstance(SkillMechanic type, @Nullable SkillTargeter target, SkillTrigger trigger,
 							 List<ConditionInstance> conditions,
 							 List<ConditionInstance> conditionsTarget,
 							 List<ConditionInstance> conditionsTrigger,
 							 HealthModifier healthMod, double chance) {
+		this.mechanic = type;
 		this.targeter = target;
 		this.trigger = trigger;
 		this.conditions = conditions;

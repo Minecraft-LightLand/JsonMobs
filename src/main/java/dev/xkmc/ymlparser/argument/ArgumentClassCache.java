@@ -24,6 +24,8 @@ class ArgumentClassCache<T> {
 	private final LazyExc<List<ArgumentField>> fields;
 	private final LazyExc<Integer> required;
 
+	private T obj;
+
 	private ArgumentClassCache(Class<T> cls) {
 		CACHE.put(cls, this);
 		this.cls = cls;
@@ -56,6 +58,12 @@ class ArgumentClassCache<T> {
 	}
 
 	T create() throws Exception {
+		if (cls.getAnnotation(Singleton.class) != null) {
+			if (obj == null) {
+				obj = Wrappers.cast(ClassCache.get(cls).create());
+			}
+			return obj;
+		}
 		return Wrappers.cast(ClassCache.get(cls).create());
 	}
 

@@ -6,6 +6,7 @@ import dev.xkmc.ymlmobs.init.YmlMobs;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @SuppressWarnings("unused")
@@ -49,7 +50,7 @@ public class DataTypeRegistry<T, E extends IDataRegistryEntry<T>> implements IDa
 
 	@Nullable
 	public E get(String str) {
-		return map.get(str);
+		return map.get(str.toLowerCase(Locale.ROOT));
 	}
 
 	public String getID(T val) {

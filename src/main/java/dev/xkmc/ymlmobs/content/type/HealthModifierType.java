@@ -24,6 +24,7 @@ public class HealthModifierType implements DataType<HealthModifier> {
 
 	@Override
 	public HealthModifier parse(ParserLogger logger, StringElement.ListElem elem) {
+		//TODO multi-part health mod
 		String str = elem.toString();
 		try {
 			if (str.startsWith("<=")) {

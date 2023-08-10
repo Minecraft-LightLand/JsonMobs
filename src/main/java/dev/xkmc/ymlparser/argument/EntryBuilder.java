@@ -6,6 +6,16 @@ import java.util.*;
 
 public class EntryBuilder<T> {
 
+	public static <T> T create(Class<T> cls) {
+		try {
+			return ArgumentClassCache.get(cls).create();
+		} catch (RuntimeException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
 	public static <T> T build(Class<T> cls, IArgumentProvider arguments) {
 		try {
 			ArgumentClassCache<T> cache = ArgumentClassCache.get(cls);

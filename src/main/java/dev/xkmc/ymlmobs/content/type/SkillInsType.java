@@ -1,6 +1,6 @@
 package dev.xkmc.ymlmobs.content.type;
 
-import dev.xkmc.ymlmobs.content.skill.core.ConditionInstance;
+import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
 import dev.xkmc.ymlmobs.content.skill.core.MechanicInstance;
 import dev.xkmc.ymlmobs.content.skill.core.SkillMechanic;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
