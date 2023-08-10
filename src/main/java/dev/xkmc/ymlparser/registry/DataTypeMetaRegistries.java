@@ -24,21 +24,23 @@ public class DataTypeMetaRegistries {
 	private static final Map<Class<?>, DataType<?>> HANDLERS = new ConcurrentHashMap<>();
 	private static final Map<Class<?>, HolderDataType<?>> HOLDERS = new ConcurrentHashMap<>();
 
-	public static <T> void registerDataType(Class<T> cls, DataType<T> type) {
+	public static <R extends DataType<T>, T> R registerDataType(Class<T> cls, R type) {
 		HANDLERS.put(cls, type);
 		HOLDERS.put(cls, HolderDataType.wrap(type));
+		return type;
 	}
 
-	public static <T> void registerHolderType(Class<T> cls, HolderDataTypeImpl<T> type) {
+	public static <R extends HolderDataTypeImpl<T>, T> R registerHolderType(Class<T> cls, R type) {
 		HOLDERS.put(cls, type);
 		HANDLERS.put(cls, type.asStaticType());
+		return type;
 	}
 
-	static {
-		registerHolderType(Integer.class, new IntType("int"));
-		registerHolderType(Double.class, new DoubleType("double"));
-		registerHolderType(String.class, new StringType("String"));
+	public static final IntType INT = registerHolderType(Integer.class, new IntType("int"));
+	public static final DoubleType DOUBLE = registerHolderType(Double.class, new DoubleType("double"));
+	public static final StringType STRING = registerHolderType(String.class, new StringType("String"));
 
+	static {
 		regRegistry(Block.class, ForgeRegistries.BLOCKS);
 		regRegistry(Item.class, ForgeRegistries.ITEMS);
 		regRegistry(Potion.class, ForgeRegistries.POTIONS);
