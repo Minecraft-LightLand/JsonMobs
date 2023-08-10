@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.core;
+package dev.xkmc.ymlmobs.content.skill.core;
 
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.holder.DataHolder;

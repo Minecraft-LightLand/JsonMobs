@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.core;
+package dev.xkmc.ymlmobs.content.skill.execution;
 
 import dev.xkmc.ymlparser.holder.DataContext;
 import net.minecraft.util.RandomSource;

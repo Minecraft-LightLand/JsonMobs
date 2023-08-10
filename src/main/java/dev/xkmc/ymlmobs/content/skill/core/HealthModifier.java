@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.core;
+package dev.xkmc.ymlmobs.content.skill.core;
 
 import dev.xkmc.ymlmobs.content.variables.builtin.CasterContext;
 

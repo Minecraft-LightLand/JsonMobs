@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.ymlmobs.content.core;
+package dev.xkmc.ymlmobs.content.skill.audience;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

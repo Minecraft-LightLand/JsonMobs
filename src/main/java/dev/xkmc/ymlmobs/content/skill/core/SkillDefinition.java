@@ -1,5 +1,5 @@
 
-package dev.xkmc.ymlmobs.content.core;
+package dev.xkmc.ymlmobs.content.skill.core;
 
 import java.util.LinkedList;
 import java.util.List;
