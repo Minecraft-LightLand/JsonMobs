@@ -6,9 +6,9 @@ import java.util.List;
 public enum StringHierarchy {
 	DQ(Type.STRING, '"', '"', ""),
 	SQ(Type.STRING, '\'', '\'', ""),
-	C(Type.DATA, '{', '}', ";"),
-	B(Type.LIST, '[', ']', ",-"),
-	A(Type.VAR, '<', '>', "."),
+	CURVE(Type.DATA, '{', '}', ";"),
+	BRACKET(Type.LIST, '[', ']', ",-"),
+	ARROW(Type.VAR, '<', '>', "."),
 	NONE(Type.NONE, '\0', '\0', " ");
 
 	public final Type type;
@@ -28,14 +28,14 @@ public enum StringHierarchy {
 
 	@Nullable
 	StringHierarchy bundling() {
-		return this == B ? NONE : null;
+		return this == BRACKET ? NONE : null;
 	}
 
 	List<StringHierarchy> allowedSubs() {
 		return switch (type) {
 			case VAR, LIST -> List.of();
-			case STRING -> List.of(A);
-			case DATA, NONE -> List.of(DQ, SQ, C, B, A);
+			case STRING -> List.of(ARROW);
+			case DATA, NONE -> List.of(DQ, SQ, CURVE, BRACKET, ARROW);
 		};
 	}
 

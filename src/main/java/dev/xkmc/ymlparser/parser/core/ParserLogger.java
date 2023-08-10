@@ -1,24 +1,46 @@
 package dev.xkmc.ymlparser.parser.core;
 
 import dev.xkmc.ymlmobs.init.YmlMobs;
-import dev.xkmc.ymlparser.parser.line.StringElement;
 
 public interface ParserLogger {
 
-	static ParserLogger of(ParserLogger logger, StringElement elem) {
-		while (logger instanceof Sub sub) {
-			logger = sub.parent();
-		}
-		return new SubElem(logger, elem);
+	static ParserLogger of(ParserLogger logger, int start) {
+		return new SubElem(logger.parent(), start);
 	}
 
 	void error(String s);
 
 	void error(int i, String s);
 
-	void fatal(String s);
+	IllegalArgumentException fatal(String s);
 
-	void fatal(int index, String s);
+	IllegalArgumentException fatal(int index, String s);
+
+	ParserLogger.File parent();
+
+	interface Wrapped extends ParserLogger {
+
+		@Override
+		default void error(String s) {
+			parent().error(s);
+		}
+
+		@Override
+		default void error(int i, String s) {
+			parent().error(i, s);
+		}
+
+		@Override
+		default IllegalArgumentException fatal(String s) {
+			return parent().fatal(s);
+		}
+
+		@Override
+		default IllegalArgumentException fatal(int index, String s) {
+			return parent().fatal(index, s);
+		}
+
+	}
 
 	interface Line extends ParserLogger {
 
@@ -30,15 +52,13 @@ public interface ParserLogger {
 		}
 
 		@Override
-		default void fatal(String s) {
-			fatal(defaultIndex(), s);
+		default IllegalArgumentException fatal(String s) {
+			return fatal(defaultIndex(), s);
 		}
 
 	}
 
 	interface Sub extends Line {
-
-		ParserLogger parent();
 
 		@Override
 		default void error(int i, String s) {
@@ -46,13 +66,18 @@ public interface ParserLogger {
 		}
 
 		@Override
-		default void fatal(int i, String s) {
-			parent().fatal(i, s);
+		default IllegalArgumentException fatal(int i, String s) {
+			return parent().fatal(i, s);
 		}
 
 	}
 
 	interface File extends Line {
+
+		@Override
+		default File parent() {
+			return this;
+		}
 
 		String file();
 
@@ -64,18 +89,18 @@ public interface ParserLogger {
 		}
 
 		@Override
-		default void fatal(int index, String s) {
+		default IllegalArgumentException fatal(int index, String s) {
 			YmlMobs.LOGGER.fatal("Fatal error occurs in file %s line %d column %d: ".formatted(file(), line(), index) + s);
-			throw new IllegalArgumentException(s);
+			return new IllegalArgumentException(s);
 		}
 
 	}
 
-	record SubElem(ParserLogger parent, StringElement elem) implements Sub {
+	record SubElem(ParserLogger.File parent, int start) implements Sub {
 
 		@Override
 		public int defaultIndex() {
-			return elem.start;
+			return start;
 		}
 	}
 

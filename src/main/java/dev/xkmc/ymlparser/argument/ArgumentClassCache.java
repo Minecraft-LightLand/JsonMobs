@@ -22,6 +22,7 @@ class ArgumentClassCache<T> {
 
 	private final Class<T> cls;
 	private final LazyExc<List<ArgumentField>> fields;
+	private final LazyExc<Integer> required;
 
 	private ArgumentClassCache(Class<T> cls) {
 		CACHE.put(cls, this);
@@ -35,10 +36,23 @@ class ArgumentClassCache<T> {
 			}
 			return ans;
 		});
+		required = new LazyExc<>(() -> {
+			int ans = 0;
+			for (var e : getArguments()) {
+				if (!e.arg().optional()) {
+					ans++;
+				}
+			}
+			return ans;
+		});
 	}
 
 	List<ArgumentField> getArguments() throws Exception {
 		return fields.get();
+	}
+
+	int getRequired() throws Exception {
+		return required.get();
 	}
 
 	T create() throws Exception {

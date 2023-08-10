@@ -52,11 +52,6 @@ public abstract class NumericType<T> extends HolderDataTypeImpl<T> {
 	}
 
 	@Override
-	public T parseStatic(ParserLogger logger, StringElement.ListElem elem) {
-		return null;//TODO
-	}
-
-	@Override
 	public DataHolder<T> parse(ParserLogger logger, StringElement.ListElem elem) {
 		elem = elem.tryUnwrap(StringHierarchy.Type.STRING);
 		if (elem.list.size() == 1 && elem.list.get(0) instanceof StringElement.StrElem str) {
@@ -68,7 +63,7 @@ public abstract class NumericType<T> extends HolderDataTypeImpl<T> {
 		Map<String, NumericVariable> vars = new LinkedHashMap<>();
 		for (var e : elem.list) {
 			if (e instanceof StringElement.Hierarchy hier) {
-				if (hier.hierarchy == StringHierarchy.A) {
+				if (hier.hierarchy == StringHierarchy.ARROW) {
 					NumericVariable holder = VariableContext.ofNumeric(hier.list);
 					if (holder == null) {
 						logger.error(hier.start, "Invalid variable " + hier + ", replaced with 0");
@@ -77,7 +72,7 @@ public abstract class NumericType<T> extends HolderDataTypeImpl<T> {
 					String name = "p" + vars.size();
 					vars.put(name, holder);
 				} else {
-					logger.fatal(hier.start, "Invalid structure " + hier + " as number");
+					throw logger.fatal(hier.start, "Invalid structure " + hier + " as number");
 				}
 			} else {
 				builder.append(e.toString());

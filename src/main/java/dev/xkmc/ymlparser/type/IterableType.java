@@ -16,14 +16,12 @@ public interface IterableType<T> extends DataType<T> {
 	@Override
 	default T parse(ParserLogger logger, StringElement.ListElem elem) {
 		if (elem.list.size() != 1 || !(elem.list.get(0) instanceof StringElement.StrElem str)) {
-			logger.fatal("value should be a simple value, found " + elem);
-			throw new IllegalStateException("unreachable");
+			throw logger.fatal("value should be a simple value, found " + elem);
 		}
 		String val = str.toString();
 		SupplierEntry<T> entry = get(val);
 		if (entry == null) {
-			logger.fatal("value " + val + " is not valid for type " + name());
-			throw new IllegalStateException("unreachable");
+			throw logger.fatal("value " + val + " is not valid for type " + name());
 		}
 		return entry.parse();
 	}

@@ -1,5 +1,6 @@
 package dev.xkmc.ymlparser.primitive.core;
 
+import com.mojang.datafixers.util.Pair;
 import dev.xkmc.ymlparser.holder.DataContext;
 import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
@@ -14,17 +15,7 @@ import java.util.List;
 
 public class StringType extends HolderDataTypeImpl<String> {
 
-	public StringType(String name) {
-		super(name);
-	}
-
-	@Override
-	public String parseStatic(ParserLogger logger, StringElement.ListElem elem) {
-		return null;//TODO
-	}
-
-	@Override
-	public DataHolder<String> parse(ParserLogger logger, StringElement.ListElem elem) {
+	private static Pair<String, List<StringVariable>> parseStr(ParserLogger logger, StringElement.ListElem elem, boolean allowVar) {
 		elem = elem.tryUnwrap(StringHierarchy.Type.STRING);
 		StringBuilder builder = new StringBuilder();
 		List<StringVariable> vars = new ArrayList<>();
@@ -36,27 +27,46 @@ public class StringType extends HolderDataTypeImpl<String> {
 						if (l0.list.get(0) instanceof StringElement.StrElem sl) {
 							String str = sl.toString();
 							if (str.startsWith("&")) {
-								builder.append(StringPlaceholderHelper.parse(ParserLogger.of(logger, sl), str));
+								builder.append(StringPlaceholderHelper.parse(ParserLogger.of(logger, sl.start), str));
 								continue;
 							}
 						}
 					}
 				}
-				StringVariable var = VariableContext.of(hier.list);
-				if (var == null) {
-					logger.error(hier.start, "Unrecognized variable " + hier);
+				if (allowVar) {
+					StringVariable var = VariableContext.of(hier.list);
+					if (var == null) {
+						logger.error(hier.start, "Unrecognized variable " + hier);
+					} else {
+						vars.add(var);
+						builder.append("%s");
+					}
 				} else {
-					vars.add(var);
-					builder.append("%s");
+					builder.append(hier.toString());
 				}
 			} else {
 				builder.append(e);
 			}
 		}
-		if (vars.size() == 0) {
-			return new StaticData<>(builder.toString());
+		return Pair.of(builder.toString(), vars);
+	}
+
+	public StringType(String name) {
+		super(name);
+	}
+
+	@Override
+	public String parseStatic(ParserLogger logger, StringElement.ListElem elem) {
+		return parseStr(logger, elem, false).getFirst();
+	}
+
+	@Override
+	public DataHolder<String> parse(ParserLogger logger, StringElement.ListElem elem) {
+		var result = parseStr(logger, elem, true);
+		if (result.getSecond().size() == 0) {
+			return new StaticData<>(result.getFirst());
 		}
-		return new StringExp(builder.toString(), vars);
+		return new StringExp(result.getFirst(), result.getSecond());
 	}
 
 	record StringExp(String exp, List<StringVariable> vars) implements DataHolder<String> {

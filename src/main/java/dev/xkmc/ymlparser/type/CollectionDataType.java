@@ -27,13 +27,12 @@ public record CollectionDataType<T>(DataType<T> type) implements DataType<Collec
 			}
 			return ans;
 		}
-		if (elem.list.size() != 1 || !(elem.list.get(0) instanceof StringElement.Hierarchy hier) || hier.hierarchy != StringHierarchy.B) {
-			logger.fatal("value should be a list value, found " + elem);
-			throw new IllegalStateException("unreachable");
+		if (elem.list.size() != 1 || !(elem.list.get(0) instanceof StringElement.Hierarchy hier) || hier.hierarchy != StringHierarchy.BRACKET) {
+			throw logger.fatal("value should be a list value, found " + elem);
 		}
 		List<T> ans = new ArrayList<>();
 		for (var e : hier.list) {
-			if (type instanceof MetaDataType<T> meta) {
+			if (type instanceof MetaDataType<T, ?> meta) {
 				ans.add(meta.parse(logger, e));
 			} else {
 				ans.add(type.parse(logger, e.tryUnwrap(StringHierarchy.Type.NONE)));

@@ -2,23 +2,31 @@ package dev.xkmc.ymlparser.argument;
 
 import com.mojang.datafixers.util.Pair;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class EntryBuilder<T> {
 
-	@Nullable
 	public static <T> T build(Class<T> cls, IArgumentProvider arguments) {
 		try {
 			ArgumentClassCache<T> cache = ArgumentClassCache.get(cls);
 			T ans = cache.create();
 			new ArgumentFiller(cache.getArguments()).fill(ans, arguments);
 			return ans;
+		} catch (RuntimeException e) {
+			throw e;
 		} catch (Exception e) {
-			return null;
+			throw new IllegalArgumentException(e);
 		}
 	}
 
+	public static <T> int countRequired(Class<T> cls) {
+		try {
+			ArgumentClassCache<T> cache = ArgumentClassCache.get(cls);
+			return cache.getRequired();
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
 
 	static class ArgumentFiller {
 
@@ -41,15 +49,11 @@ public class EntryBuilder<T> {
 		}
 
 		<T> void fill(T obj, IArgumentProvider pvd) throws Exception {
-			pvd.handle(this::fillEntry);
-			List<String> unfill = new ArrayList<>();
+			pvd.handleNamed(this::fillEntry);
 			for (var e : remain) {
 				if (!e.arg().optional()) {
-					unfill.add(e.arg().name());
+					fillEntry(e.arg().name(), pvd.pollUnnamed(e.arg().name()));
 				}
-			}
-			if (!unfill.isEmpty()) {
-				pvd.fatal("Fields " + unfill + " are not filled");
 			}
 			for (var pair : list) {
 				ArgumentField field = pair.getFirst();

@@ -1,12 +1,12 @@
 package dev.xkmc.ymlmobs.init;
 
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.l2library.base.L2Registrate;
+import dev.xkmc.l2library.serial.config.PacketHandlerWithConfig;
 import dev.xkmc.ymlmobs.init.data.*;
 import dev.xkmc.ymlmobs.init.loot.YMGLMProvider;
 import dev.xkmc.ymlmobs.init.registrate.YMItems;
 import dev.xkmc.ymlmobs.init.registrate.YMMiscs;
-import dev.xkmc.l2library.base.L2Registrate;
-import dev.xkmc.l2library.serial.config.PacketHandlerWithConfig;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeMod;

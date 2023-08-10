@@ -110,6 +110,14 @@ public abstract class StringElement {
 			}
 			return this;
 		}
+
+		public boolean startsWith(String s) {
+			return toString().startsWith(s);
+		}
+
+		public boolean endsWith(String s) {
+			return toString().endsWith(s);
+		}
 	}
 
 	public static class StrElem extends StringElement {

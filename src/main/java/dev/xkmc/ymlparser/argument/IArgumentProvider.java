@@ -7,7 +7,9 @@ import java.util.function.BiConsumer;
 
 public interface IArgumentProvider extends ParserLogger {
 
-	void handle(BiConsumer<String, Entry> filler);
+	void handleNamed(BiConsumer<String, Entry> filler);
+
+	Entry pollUnnamed(String str);
 
 	interface Entry extends ParserLogger {
 

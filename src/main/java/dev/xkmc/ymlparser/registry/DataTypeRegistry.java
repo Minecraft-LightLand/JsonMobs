@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("unused")
-public class DataTypeRegistry<T> implements IDataTypeRegistry<T> {
+public class DataTypeRegistry<T, E extends IDataRegistryEntry<T>> implements IDataTypeRegistry<T> {
 
-	private final Map<String, DataRegistryEntry<T>> map = new LinkedTreeMap<>();
+	private final Map<String, E> map = new LinkedTreeMap<>();
 	private final Map<T, String> reverseMap = new HashMap<>();
 
-	public void register(DataRegistryEntry<T> entry) {
+	public void register(E entry) {
 		putAndCheck(entry.id(), entry);
 		reverseMap.put(entry.val(), entry.id());
 		for (String id : entry.alias()) {
@@ -22,7 +22,7 @@ public class DataTypeRegistry<T> implements IDataTypeRegistry<T> {
 		}
 	}
 
-	private void putAndCheck(String id, DataRegistryEntry<T> entry) {
+	private void putAndCheck(String id, E entry) {
 		if (map.containsKey(id)) {
 			var prev = map.get(id);
 			boolean currentMain = id.equals(entry.id());
@@ -48,7 +48,7 @@ public class DataTypeRegistry<T> implements IDataTypeRegistry<T> {
 	}
 
 	@Nullable
-	public DataRegistryEntry<T> get(String str) {
+	public E get(String str) {
 		return map.get(str);
 	}
 
