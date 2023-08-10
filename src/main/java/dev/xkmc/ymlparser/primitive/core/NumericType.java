@@ -4,6 +4,7 @@ import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.parser.line.StringHierarchy;
+import dev.xkmc.ymlparser.primitive.calc.ContextRef;
 import dev.xkmc.ymlparser.primitive.calc.Functions;
 import dev.xkmc.ymlparser.primitive.calc.NumericExpressionHolder;
 import dev.xkmc.ymlparser.primitive.calc.Operators;
@@ -79,17 +80,18 @@ public abstract class NumericType<T> extends HolderDataTypeImpl<T> {
 			}
 		}
 		Expression exp;
+		ContextRef ref = new ContextRef();
 		try {
 			exp = new ExpressionBuilder(builder.toString())
-					.operator(Operators.operators)
-					.functions(Functions.functions)
+					.operator(Operators.OPERATORS)
+					.functions(Functions.getFunctions(ref))
 					.variables(vars.keySet())
 					.build();
 		} catch (IllegalArgumentException e) {
 			logger.error(elem.start, e.getMessage());
 			throw e;
 		}
-		return new NumericExpressionHolder<>(this, exp, vars);
+		return new NumericExpressionHolder<>(this, exp, vars, ref);
 	}
 
 	public abstract T cast(double evaluate);

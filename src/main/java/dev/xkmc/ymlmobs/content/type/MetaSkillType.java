@@ -10,25 +10,25 @@ import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
-public class MetaSkillType extends MetaDataType<MetaSkill, Skill> {
+public class MetaSkillType extends MetaDataType<MechanicInstance, SkillMechanic> {
 
 	protected MetaSkillType() {
 		super(YMDataTypeRegistry.SKILL);
 	}
 
 	@Override
-	protected MetaSkill createSimple(Skill type) {
-		return MetaSkill.of(type);
+	protected MechanicInstance createSimple(SkillMechanic type) {
+		return MechanicInstance.of(type);
 	}
 
 	@Override
-	protected MetaSkill createWithParams(ParserLogger logger, Skill type, List<StringElement.ListElem> other) {
+	protected MechanicInstance createWithParams(ParserLogger logger, SkillMechanic type, List<StringElement.ListElem> other) {
 		if (other.size() == 0) {
 			return createSimple(type);
 		}
 		Queue<StringElement.ListElem> queue = new ArrayDeque<>(other);
-		SkillTarget target = null;
-		SkillTrigger trigger = null;
+		SkillTargeter target = null;
+		SkillTrigger trigger = SkillTrigger.COMBAT;
 		HealthModifier healthMod = HealthModifier.NULL;
 		double chance = 1;
 		if (!queue.isEmpty() && queue.peek().startsWith("@")) {
@@ -54,6 +54,6 @@ public class MetaSkillType extends MetaDataType<MetaSkill, Skill> {
 		if (!queue.isEmpty()) {
 			logger.error(queue.peek().start, "Config contains extra data: " + queue);
 		}
-		return MetaSkill.of(type, target, trigger, healthMod, chance);
+		return MechanicInstance.of(type, target, trigger, healthMod, chance);
 	}
 }

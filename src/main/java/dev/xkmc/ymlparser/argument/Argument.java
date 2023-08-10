@@ -13,8 +13,6 @@ public @interface Argument {
 
 	String[] aliases() default {};
 
-	String descID();
-
 	String description();
 
 	boolean optional() default false;

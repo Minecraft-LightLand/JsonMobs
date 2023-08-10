@@ -30,7 +30,8 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("abc%sdef%sghi%s".formatted("A", "B", "C"));
+		Class<Integer> cls = int.class;
+		System.out.println(Integer.class + ", " + int.class);
 	}
 
 	private static void testParse() throws Exception {

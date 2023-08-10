@@ -1,4 +1,4 @@
 package dev.xkmc.ymlmobs.content.core;
 
-public class MetaCondition {
+public interface SkillHolder {
 }

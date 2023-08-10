@@ -8,11 +8,14 @@ import net.objecthunter.exp4j.Expression;
 
 import java.util.Map;
 
-public record NumericExpressionHolder<T>(NumericType<T> type, Expression exp,
-										 Map<String, NumericVariable> vars) implements DataHolder<T> {
+public record NumericExpressionHolder<T>(NumericType<T> type,
+										 Expression exp,
+										 Map<String, NumericVariable> vars,
+										 ContextRef ref) implements DataHolder<T> {
 
 	@Override
 	public T get(DataContext meta) {
+		ref.setData(meta);
 		for (var e : vars.entrySet()) {
 			exp.setVariable(e.getKey(), e.getValue().parse(meta));
 		}

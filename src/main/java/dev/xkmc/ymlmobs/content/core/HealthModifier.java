@@ -19,5 +19,5 @@ public class HealthModifier {
 		this.pred = pred;
 		this.once = once;
 	}
-	
+
 }

@@ -1,4 +1,4 @@
 package dev.xkmc.ymlmobs.content.core;
 
-public class Skill {
+public class SkillTargeter {
 }

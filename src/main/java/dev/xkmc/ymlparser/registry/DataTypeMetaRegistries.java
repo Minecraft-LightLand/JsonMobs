@@ -2,6 +2,7 @@ package dev.xkmc.ymlparser.registry;
 
 import dev.xkmc.l2serial.util.Wrappers;
 import dev.xkmc.ymlparser.holder.DataHolder;
+import dev.xkmc.ymlparser.primitive.core.BooleanType;
 import dev.xkmc.ymlparser.primitive.core.DoubleType;
 import dev.xkmc.ymlparser.primitive.core.IntType;
 import dev.xkmc.ymlparser.primitive.core.StringType;
@@ -30,15 +31,22 @@ public class DataTypeMetaRegistries {
 		return type;
 	}
 
-	public static <R extends HolderDataTypeImpl<T>, T> R registerHolderType(Class<T> cls, R type) {
+	@SafeVarargs
+	public static <R extends HolderDataTypeImpl<T>, T> R registerHolderType(R type, Class<T> cls, Class<T>... alias) {
+		var sta = type.asStaticType();
 		HOLDERS.put(cls, type);
-		HANDLERS.put(cls, type.asStaticType());
+		HANDLERS.put(cls, sta);
+		for (var c : alias) {
+			HOLDERS.put(c, type);
+			HANDLERS.put(c, sta);
+		}
 		return type;
 	}
 
-	public static final IntType INT = registerHolderType(Integer.class, new IntType("int"));
-	public static final DoubleType DOUBLE = registerHolderType(Double.class, new DoubleType("double"));
-	public static final StringType STRING = registerHolderType(String.class, new StringType("String"));
+	public static final IntType INT = registerHolderType(new IntType("int"), Integer.class, int.class);
+	public static final DoubleType DOUBLE = registerHolderType(new DoubleType("double"), Double.class, double.class);
+	public static final BooleanType BOOLEAN = registerHolderType(new BooleanType("boolean"), Boolean.class, boolean.class);
+	public static final StringType STRING = registerHolderType(new StringType("String"), String.class);
 
 	static {
 		regRegistry(Block.class, ForgeRegistries.BLOCKS);
