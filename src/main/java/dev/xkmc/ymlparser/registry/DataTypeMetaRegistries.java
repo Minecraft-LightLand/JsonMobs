@@ -2,10 +2,8 @@ package dev.xkmc.ymlparser.registry;
 
 import dev.xkmc.l2serial.util.Wrappers;
 import dev.xkmc.ymlparser.holder.DataHolder;
-import dev.xkmc.ymlparser.primitive.core.BooleanType;
-import dev.xkmc.ymlparser.primitive.core.DoubleType;
-import dev.xkmc.ymlparser.primitive.core.IntType;
-import dev.xkmc.ymlparser.primitive.core.StringType;
+import dev.xkmc.ymlparser.primitive.calc.IRange;
+import dev.xkmc.ymlparser.primitive.core.*;
 import dev.xkmc.ymlparser.type.*;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
@@ -47,6 +45,7 @@ public class DataTypeMetaRegistries {
 	public static final DoubleType DOUBLE = registerHolderType(new DoubleType("double"), Double.class, double.class);
 	public static final BooleanType BOOLEAN = registerHolderType(new BooleanType("boolean"), Boolean.class, boolean.class);
 	public static final StringType STRING = registerHolderType(new StringType("String"), String.class);
+	public static final RangeType RANGE = registerDataType(IRange.class, new RangeType("range"));
 
 	static {
 		regRegistry(Block.class, ForgeRegistries.BLOCKS);
