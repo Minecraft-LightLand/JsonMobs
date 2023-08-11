@@ -58,7 +58,7 @@ public class ArgumentClassCache<T> {
 	}
 
 	T create() throws Exception {
-		if (cls.getAnnotation(Singleton.class) != null) {
+		if (getArguments().size() == 0) {
 			if (obj == null) {
 				obj = Wrappers.cast(ClassCache.get(cls).create());
 			}

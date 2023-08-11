@@ -1,5 +1,6 @@
 package dev.xkmc.ymlmobs.content.type;
 
+import dev.xkmc.l2serial.util.Wrappers;
 import dev.xkmc.ymlmobs.content.skill.condition.action.*;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionAction;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
@@ -7,7 +8,6 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.parse.ConditionInsType;
 import dev.xkmc.ymlmobs.content.skill.condition.parse.ConditionMetaType;
-import dev.xkmc.ymlmobs.content.skill.condition.type.entity.BurningCondition;
 import dev.xkmc.ymlmobs.content.skill.core.MechanicInstance;
 import dev.xkmc.ymlmobs.content.skill.core.SkillMechanic;
 import dev.xkmc.ymlmobs.content.skill.core.SkillTargeter;
@@ -17,6 +17,14 @@ import dev.xkmc.ymlparser.registry.DataTypeLangGen;
 import dev.xkmc.ymlparser.registry.DataTypeMetaRegistries;
 import dev.xkmc.ymlparser.type.MetaTypeEntry;
 import dev.xkmc.ymlparser.type.MetaTypeRegistry;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.forgespi.language.ModFileScanData;
+import org.objectweb.asm.Type;
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class YMDataTypeRegistry {
 
@@ -53,7 +61,7 @@ public class YMDataTypeRegistry {
 
 		// condition
 		{
-			regSkillCondition(reg, BurningCondition.class);
+			find(ConditionType.class, SkillCondition.class).forEach(cls -> regSkillCondition(reg, cls));
 		}
 	}
 
@@ -68,6 +76,34 @@ public class YMDataTypeRegistry {
 
 	public static void register() {
 
+	}
+
+	public static <T> List<Class<? extends T>> find(Class<?> annotation, Class<T> base) {
+		Type type = Type.getType(annotation);
+		List<ModFileScanData> list = ModList.get().getAllScanData();
+		Set<String> set = new LinkedHashSet<>();
+		for (ModFileScanData data : list) {
+			Set<ModFileScanData.AnnotationData> annotations = data.getAnnotations();
+			for (ModFileScanData.AnnotationData a : annotations) {
+				if (a.annotationType().equals(type)) {
+					set.add(a.memberName());
+				}
+			}
+		}
+		List<Class<? extends T>> ans = new ArrayList<>();
+		for (String name : set) {
+			try {
+				Class<?> cls = Class.forName(name);
+				if (base.isAssignableFrom(cls)) {
+					ans.add(Wrappers.cast(cls));
+				} else {
+					YmlMobs.LOGGER.error("Failed to load: {}", name);
+				}
+			} catch (ReflectiveOperationException | LinkageError e) {
+				YmlMobs.LOGGER.error("Failed to load: {}", name, e);
+			}
+		}
+		return ans;
 	}
 
 }

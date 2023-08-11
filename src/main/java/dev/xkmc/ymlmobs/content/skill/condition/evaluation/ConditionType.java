@@ -11,7 +11,7 @@ public @interface ConditionType {
 
 	String[] author() default "";
 
-	EvaluationType[] value();
+	EvaluationType[] type();
 
 	String name();
 
