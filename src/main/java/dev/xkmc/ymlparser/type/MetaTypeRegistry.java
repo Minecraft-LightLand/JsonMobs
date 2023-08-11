@@ -1,8 +1,11 @@
 package dev.xkmc.ymlparser.type;
 
 import com.mojang.datafixers.util.Either;
+import dev.xkmc.l2serial.util.Wrappers;
+import dev.xkmc.ymlparser.argument.ArgumentClassCache;
 import dev.xkmc.ymlparser.argument.EntryBuilder;
 import dev.xkmc.ymlparser.argument.HierarchyArgumentFiller;
+import dev.xkmc.ymlparser.argument.Singleton;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.parser.line.StringHierarchy;
@@ -71,6 +74,16 @@ public class MetaTypeRegistry<R> extends DataTypeRegistry<Class<? extends R>, Me
 			throw logger.fatal(elem.start, "Failed to construct " + name() + " from " + elem);
 		}
 		return result.left().get();
+	}
+
+	@Override
+	protected void checkValidity(MetaTypeEntry<R> entry) {
+		super.checkValidity(entry);
+		var list = Wrappers.get(ArgumentClassCache.get(entry.val())::getArguments);
+		assert list != null;
+		if ((list.size() == 0) == ((entry.val().getAnnotation(Singleton.class) == null))) {
+			throw new IllegalStateException("Entry " + entry.descID() + " has wrong singleton attribute");
+		}
 	}
 
 }

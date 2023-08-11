@@ -25,7 +25,12 @@ public class DataTypeRegistry<T, E extends IDataRegistryEntry<T>> implements IDa
 		return name;
 	}
 
+	protected void checkValidity(E entry) {
+
+	}
+
 	public E register(E entry) {
+		checkValidity(entry);
 		putAndCheck(entry.id(), entry);
 		reverseMap.put(entry.val(), entry.id());
 		for (String id : entry.alias()) {

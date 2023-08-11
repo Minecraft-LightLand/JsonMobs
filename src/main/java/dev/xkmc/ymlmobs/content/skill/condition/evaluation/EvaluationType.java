@@ -20,6 +20,10 @@ public enum EvaluationType {
 		this.type = type;
 	}
 
+	public Class<?> getTypeClass() {
+		return type.cls();
+	}
+
 	private record Type<T>(Class<T> cls, BiPredicate<T, EvaluationContext> pred) {
 
 	}
