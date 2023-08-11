@@ -1,9 +1,13 @@
 package dev.xkmc.ymlparser.type;
 
+import dev.xkmc.l2serial.util.Wrappers;
+import dev.xkmc.ymlparser.argument.ArgumentClassCache;
 import dev.xkmc.ymlparser.argument.EntryBuilder;
 import dev.xkmc.ymlparser.argument.IArgumentProvider;
+import dev.xkmc.ymlparser.argument.Singleton;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
+import dev.xkmc.ymlparser.registry.DataTypeLangGen;
 import dev.xkmc.ymlparser.registry.IDataRegistryEntry;
 
 import java.util.function.BiConsumer;
@@ -21,6 +25,19 @@ public record MetaTypeEntry<T>(MetaTypeRegistry<T> reg, String id, Class<? exten
 
 	public int requiredParamCount() {
 		return EntryBuilder.countRequired(val);
+	}
+
+	@Override
+	public void desc(DataTypeLangGen reg, String desc) {
+		IDataRegistryEntry.super.desc(reg, desc);
+		var list = Wrappers.get(ArgumentClassCache.get(val())::getArguments);
+		assert list != null;
+		if ((list.size() == 0) == ((val().getAnnotation(Singleton.class) == null))) {
+			throw new IllegalStateException("Entry " + descID() + " has wrong singleton attribute");
+		}
+		for (var field : list) {
+			reg.addArg(field);
+		}
 	}
 
 	private record NullArgumentProvider(ParserLogger.File parent)

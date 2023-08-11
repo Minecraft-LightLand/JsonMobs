@@ -1,12 +1,13 @@
 package dev.xkmc.ymlmobs.init;
 
 import com.tterrag.registrate.providers.ProviderType;
-import dev.xkmc.l2library.base.L2Registrate;
 import dev.xkmc.l2library.serial.config.PacketHandlerWithConfig;
+import dev.xkmc.ymlmobs.content.type.YMDataTypeRegistry;
 import dev.xkmc.ymlmobs.init.data.*;
 import dev.xkmc.ymlmobs.init.loot.YMGLMProvider;
 import dev.xkmc.ymlmobs.init.registrate.YMItems;
 import dev.xkmc.ymlmobs.init.registrate.YMMiscs;
+import dev.xkmc.ymlmobs.init.registrate.YMRegistrate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeMod;
@@ -29,7 +30,7 @@ public class YmlMobs {
 			new ResourceLocation(MODID, "main"), 1
 	);
 	public static final Logger LOGGER = LogManager.getLogger();
-	public static final L2Registrate REGISTRATE = new L2Registrate(MODID);
+	public static final YMRegistrate REGISTRATE = new YMRegistrate(MODID);
 
 	private static void registerRegistrates(IEventBus bus) {
 		ForgeMod.enableMilkFluid();
@@ -38,6 +39,7 @@ public class YmlMobs {
 		YMConfig.init();
 
 		YMGLMProvider.register();
+		YMDataTypeRegistry.register();
 
 		REGISTRATE.addDataGenerator(ProviderType.LANG, LangData::addTranslations);
 		REGISTRATE.addDataGenerator(ProviderType.RECIPE, RecipeGen::genRecipe);

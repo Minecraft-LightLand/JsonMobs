@@ -1,4 +1,3 @@
-
 package dev.xkmc.ymlmobs.content.skill.core;
 
 import java.util.LinkedList;

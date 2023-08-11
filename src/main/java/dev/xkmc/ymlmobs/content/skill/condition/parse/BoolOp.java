@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.skill.condition.core;
+package dev.xkmc.ymlmobs.content.skill.condition.parse;
 
 enum BoolOp {
 	NOT, EQ, XOR, AND, OR;

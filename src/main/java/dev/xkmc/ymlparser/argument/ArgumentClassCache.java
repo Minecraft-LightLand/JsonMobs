@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-class ArgumentClassCache<T> {
+public class ArgumentClassCache<T> {
 
 	private static final Map<Class<?>, ArgumentClassCache<?>> CACHE = new ConcurrentHashMap<>();
 
-	static <T> ArgumentClassCache<T> get(Class<T> cls) {
+	public static <T> ArgumentClassCache<T> get(Class<T> cls) {
 		if (CACHE.containsKey(cls)) {
 			return Wrappers.cast(CACHE.get(cls));
 		}
@@ -49,7 +49,7 @@ class ArgumentClassCache<T> {
 		});
 	}
 
-	List<ArgumentField> getArguments() throws Exception {
+	public List<ArgumentField> getArguments() throws Exception {
 		return fields.get();
 	}
 
@@ -89,7 +89,7 @@ class ArgumentClassCache<T> {
 				for (var field : cache.getFields()) {
 					Argument a = field.getAnnotation(Argument.class);
 					if (a != null) {
-						ans.add(new ArgumentField(a, field));
+						ans.add(new ArgumentField(cache, a, field));
 					}
 				}
 				return ans;

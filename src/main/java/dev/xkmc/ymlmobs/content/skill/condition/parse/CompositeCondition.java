@@ -1,4 +1,7 @@
-package dev.xkmc.ymlmobs.content.skill.condition.core;
+package dev.xkmc.ymlmobs.content.skill.condition.parse;
+
+import dev.xkmc.ymlmobs.content.skill.condition.core.ISkillCondition;
+import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationContext;
 
 import java.util.List;
 
@@ -18,13 +21,35 @@ public interface CompositeCondition extends ISkillCondition {
 
 	record NotOp(ISkillCondition cond) implements CompositeCondition {
 
+		@Override
+		public boolean evaluate(EvaluationContext ctx) {
+			return !cond.evaluate(ctx);
+		}
 	}
 
 	record BinOp(boolean equal, ISkillCondition b0, ISkillCondition b1) implements CompositeCondition {
 
+		@Override
+		public boolean evaluate(EvaluationContext ctx) {
+			return equal == (b0.evaluate(ctx) == b1.evaluate(ctx));
+		}
 	}
 
 	record ListOp(boolean and, List<ISkillCondition> list) implements CompositeCondition {
+
+		@Override
+		public boolean evaluate(EvaluationContext ctx) {
+			boolean ans = and;
+			for (var c : list) {
+				boolean res = c.evaluate(ctx);
+				if (and) {
+					ans &= res;
+				} else {
+					ans |= res;
+				}
+			}
+			return ans;
+		}
 
 	}
 

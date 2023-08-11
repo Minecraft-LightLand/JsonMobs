@@ -4,10 +4,7 @@ import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.parser.line.StringHierarchy;
-import dev.xkmc.ymlparser.primitive.calc.ContextRef;
-import dev.xkmc.ymlparser.primitive.calc.Functions;
-import dev.xkmc.ymlparser.primitive.calc.NumericExpressionHolder;
-import dev.xkmc.ymlparser.primitive.calc.Operators;
+import dev.xkmc.ymlparser.primitive.calc.*;
 import dev.xkmc.ymlparser.primitive.variable.NumericVariable;
 import dev.xkmc.ymlparser.primitive.variable.VariableContext;
 import dev.xkmc.ymlparser.type.HolderDataTypeImpl;
@@ -20,32 +17,10 @@ import java.util.Map;
 
 public abstract class NumericType<T> extends HolderDataTypeImpl<T> {
 
-	private static final String PATTERN_NUM = "[0-9e.+-]+";
-	private static final String PATTERN_RANGE = "[0-9e.+-]+to[0-9e.+-]+";
-
 	@Nullable
 	private static <T> DataHolder<T> parseSimple(NumericType<T> type, String str) {
-		if (str.matches(PATTERN_NUM)) {
-			try {
-				double val = Double.parseDouble(str);
-				return type.toStatic(val);
-			} catch (NumberFormatException e) {
-				return null;
-			}
-		} else if (str.matches(PATTERN_RANGE)) {
-			String[] strs = str.split("to");
-			if (strs.length == 2) {
-				double d0, d1;
-				try {
-					d0 = Double.parseDouble(strs[0]);
-					d1 = Double.parseDouble(strs[1]);
-					return type.toRange(Math.min(d0, d1), Math.max(d0, d1));
-				} catch (NumberFormatException e) {
-					return null;
-				}
-			}
-		}
-		return null;
+		var result = NumberParser.parseNumber(str);
+		return result.map(e -> e.map(type::toStatic, r -> type.toRange(r.min(), r.max()))).orElse(null);
 	}
 
 	public NumericType(String name) {

@@ -1,6 +1,5 @@
 package dev.xkmc.ymlparser.registry;
 
-import dev.xkmc.l2library.base.L2Registrate;
 import dev.xkmc.ymlparser.type.IterableType;
 
 public interface IDataRegistryEntry<T> extends IterableType.SupplierEntry<T> {
@@ -21,8 +20,8 @@ public interface IDataRegistryEntry<T> extends IterableType.SupplierEntry<T> {
 		return val();
 	}
 
-	default void desc(L2Registrate reg, String desc) {
-		reg.addRawLang(descID(), desc);
+	default void desc(DataTypeLangGen reg, String desc) {
+		reg.addLang(descID(), desc);
 	}
 
 }

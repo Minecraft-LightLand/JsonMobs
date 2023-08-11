@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.skill.condition.core;
+package dev.xkmc.ymlmobs.content.skill.condition.parse;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionAction;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;

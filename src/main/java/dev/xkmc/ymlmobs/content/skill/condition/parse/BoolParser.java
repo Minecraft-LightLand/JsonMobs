@@ -1,5 +1,6 @@
-package dev.xkmc.ymlmobs.content.skill.condition.core;
+package dev.xkmc.ymlmobs.content.skill.condition.parse;
 
+import dev.xkmc.ymlmobs.content.skill.condition.core.ISkillCondition;
 import dev.xkmc.ymlmobs.content.type.YMDataTypeRegistry;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.CharSupplier;
