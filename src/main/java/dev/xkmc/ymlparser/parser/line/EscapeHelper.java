@@ -2,7 +2,7 @@ package dev.xkmc.ymlparser.parser.line;
 
 public class EscapeHelper {
 
-	public static char parseEscape(char ch, CharSupplier sup) {
+	public static char parseEscape(char ch, LineCharSupplier sup) {
 		return switch (ch) {
 			case 'n' -> '\n';
 			case 'r' -> '\r';

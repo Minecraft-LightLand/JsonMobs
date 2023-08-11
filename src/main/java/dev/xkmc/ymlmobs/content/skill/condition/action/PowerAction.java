@@ -8,5 +8,5 @@ public class PowerAction extends ConditionAction {
 
 	@Argument(name = "multiplier", aliases = {"m", "mult"}, description = "Power multiplier")
 	public DataHolder<Double> multiplier;
-	
+
 }

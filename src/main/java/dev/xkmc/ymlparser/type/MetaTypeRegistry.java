@@ -3,32 +3,22 @@ package dev.xkmc.ymlparser.type;
 import com.mojang.datafixers.util.Either;
 import dev.xkmc.ymlparser.argument.EntryBuilder;
 import dev.xkmc.ymlparser.argument.HierarchyArgumentFiller;
-import dev.xkmc.ymlparser.argument.IArgumentProvider;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.parser.line.StringHierarchy;
 import dev.xkmc.ymlparser.registry.DataTypeRegistry;
-import dev.xkmc.ymlparser.registry.IDataRegistryEntry;
 
-import java.util.function.BiConsumer;
-
-public class MetaTypeRegistry<R> extends DataTypeRegistry<Class<? extends R>, MetaTypeRegistry.Entry<R>> implements DataType<R> {
-
-	private final String name;
+public class MetaTypeRegistry<R> extends DataTypeRegistry<Class<? extends R>, MetaTypeEntry<R>> implements DataType<R> {
 
 	public MetaTypeRegistry(String name) {
-		this.name = name;
+		super(name);
 	}
 
-	public String name() {
-		return name;
-	}
-
-	private Either<R, Entry<R>> parseTypePlain(ParserLogger logger, StringElement.StrElem elem) {
+	private Either<R, MetaTypeEntry<R>> parseTypePlain(ParserLogger logger, StringElement.StrElem elem) {
 		String[] str = elem.toString().split(":");
-		MetaTypeRegistry.Entry<R> skillEntry = get(str[0]);
+		MetaTypeEntry<R> skillEntry = get(str[0]);
 		if (skillEntry == null) {
-			throw logger.fatal(elem.start, "String does not represent a valid " + name + ": " + elem);
+			throw logger.fatal(elem.start, "String does not represent a valid " + name() + ": " + elem);
 		}
 		if (skillEntry.requiredParamCount() > 0) {
 			return Either.right(skillEntry);
@@ -39,13 +29,13 @@ public class MetaTypeRegistry<R> extends DataTypeRegistry<Class<? extends R>, Me
 		if (str.length == 2) {
 			return Either.left(skillEntry.constructWithStringParam(logger, elem.start + str[0].length() + 1, str[1]));
 		}
-		throw logger.fatal(elem.start, "More than one colon detected in " + name + " type: " + elem);
+		throw logger.fatal(elem.start, "More than one colon detected in " + name() + " type: " + elem);
 	}
 
-	private Either<R, MetaTypeRegistry.Entry<R>> parseTypeWithParam(ParserLogger logger, StringElement.StrElem str, StringElement.Hierarchy elems) {
-		MetaTypeRegistry.Entry<R> entry = get(str.toString());
+	private Either<R, MetaTypeEntry<R>> parseTypeWithParam(ParserLogger logger, StringElement.StrElem str, StringElement.Hierarchy elems) {
+		MetaTypeEntry<R> entry = get(str.toString());
 		if (entry == null) {
-			throw logger.fatal(str.start, "String does not represent a valid " + name + ": " + str);
+			throw logger.fatal(str.start, "String does not represent a valid " + name() + ": " + str);
 		}
 		if (elems.list.size() == 0) {
 			if (entry.requiredParamCount() == 0) {
@@ -56,7 +46,7 @@ public class MetaTypeRegistry<R> extends DataTypeRegistry<Class<? extends R>, Me
 		return Either.left(EntryBuilder.build(entry.val(), HierarchyArgumentFiller.of(logger, elems.list)));
 	}
 
-	public Either<R, MetaTypeRegistry.Entry<R>> parseType(ParserLogger logger, StringElement.ListElem elem) {
+	public Either<R, MetaTypeEntry<R>> parseType(ParserLogger logger, StringElement.ListElem elem) {
 		if (elem.list.size() == 1) {
 			StringElement strElem = elem.list.get(0);
 			if (strElem instanceof StringElement.StrElem str) {
@@ -71,67 +61,16 @@ public class MetaTypeRegistry<R> extends DataTypeRegistry<Class<? extends R>, Me
 				}
 			}
 		}
-		throw logger.fatal(elem.start, "String does not represent a valid " + name + " configuration: " + elem);
+		throw logger.fatal(elem.start, "String does not represent a valid " + name() + " configuration: " + elem);
 	}
 
 	@Override
 	public R parse(ParserLogger logger, StringElement.ListElem elem) {
 		var result = parseType(logger, elem);
 		if (result.left().isEmpty()) {
-			throw logger.fatal(elem.start, "Failed to construct " + name + " from " + elem);
+			throw logger.fatal(elem.start, "Failed to construct " + name() + " from " + elem);
 		}
 		return result.left().get();
-	}
-
-	public record Entry<T>(String id, Class<? extends T> val,
-						   String... alias) implements IDataRegistryEntry<Class<? extends T>> {
-
-		public T construct(ParserLogger logger) {
-			return EntryBuilder.build(val, new NullArgumentProvider(logger.parent()));
-		}
-
-		public T constructWithStringParam(ParserLogger logger, int index, String s) {
-			return EntryBuilder.build(val, new StringArgumentProvider(logger.parent(), index, s));
-		}
-
-		public int requiredParamCount() {
-			return EntryBuilder.countRequired(val);
-		}
-
-	}
-
-	private record NullArgumentProvider(ParserLogger.File parent)
-			implements IArgumentProvider, ParserLogger.Wrapped {
-
-		@Override
-		public void handleNamed(BiConsumer<String, Entry> filler) {
-
-		}
-
-		@Override
-		public Entry pollUnnamed(String str) {
-			throw fatal("Field " + str + " is not filled");
-		}
-	}
-
-	private record StringArgumentProvider(ParserLogger.File parent, int defaultIndex, String str)
-			implements IArgumentProvider, ParserLogger.Sub, IArgumentProvider.Entry {
-
-		@Override
-		public void handleNamed(BiConsumer<String, Entry> filler) {
-
-		}
-
-		@Override
-		public Entry pollUnnamed(String str) {
-			return this;
-		}
-
-		@Override
-		public <T> T parseValue(DataType<T> type) {
-			return type.parse(this, StringElement.wrapSimple(defaultIndex, str));
-		}
-
 	}
 
 }

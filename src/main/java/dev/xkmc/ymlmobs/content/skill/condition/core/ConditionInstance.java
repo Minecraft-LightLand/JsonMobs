@@ -5,18 +5,18 @@ import dev.xkmc.ymlparser.argument.EntryBuilder;
 
 public class ConditionInstance {
 
-	public static ConditionInstance of(SkillCondition cond, ConditionAction action) {
+	public static ConditionInstance of(ISkillCondition cond, ConditionAction action) {
 		return new ConditionInstance(cond, action);
 	}
 
-	public static ConditionInstance of(SkillCondition cond, boolean action) {
+	public static ConditionInstance of(ISkillCondition cond, boolean action) {
 		return new ConditionInstance(cond, action ? EntryBuilder.create(RequiredAction.class) : EntryBuilder.create(ConditionAction.class));
 	}
 
-	private final SkillCondition condition;
+	private final ISkillCondition condition;
 	private final ConditionAction action;
 
-	private ConditionInstance(SkillCondition condition, ConditionAction action) {
+	private ConditionInstance(ISkillCondition condition, ConditionAction action) {
 		this.condition = condition;
 		this.action = action;
 	}

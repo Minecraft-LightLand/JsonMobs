@@ -1,27 +1,28 @@
-package dev.xkmc.ymlmobs.content.type;
+package dev.xkmc.ymlmobs.content.skill.condition.core;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionAction;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
-import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
+import dev.xkmc.ymlmobs.content.skill.condition.core.ISkillCondition;
+import dev.xkmc.ymlmobs.content.type.YMDataTypeRegistry;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.type.MetaDataType;
 
 import java.util.List;
 
-public class ConditionInsType extends MetaDataType<ConditionInstance, SkillCondition> {
+public class ConditionInsType extends MetaDataType<ConditionInstance, ISkillCondition> {
 
-	protected ConditionInsType() {
+	public ConditionInsType() {
 		super(YMDataTypeRegistry.CONDITION);
 	}
 
 	@Override
-	protected ConditionInstance createSimple(SkillCondition type) {
+	protected ConditionInstance createSimple(ISkillCondition type) {
 		return ConditionInstance.of(type, true);
 	}
 
 	@Override
-	protected ConditionInstance createWithParams(ParserLogger logger, SkillCondition type, List<StringElement.ListElem> other) {
+	protected ConditionInstance createWithParams(ParserLogger logger, ISkillCondition type, List<StringElement.ListElem> other) {
 		if (other.size() == 0) {
 			return createSimple(type);
 		}

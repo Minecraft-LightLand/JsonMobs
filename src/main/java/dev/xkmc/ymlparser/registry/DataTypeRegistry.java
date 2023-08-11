@@ -12,15 +12,26 @@ import java.util.Map;
 @SuppressWarnings("unused")
 public class DataTypeRegistry<T, E extends IDataRegistryEntry<T>> implements IDataTypeRegistry<T> {
 
+	private final String name;
 	private final Map<String, E> map = new LinkedTreeMap<>();
 	private final Map<T, String> reverseMap = new HashMap<>();
 
-	public void register(E entry) {
+	public DataTypeRegistry(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String name() {
+		return name;
+	}
+
+	public E register(E entry) {
 		putAndCheck(entry.id(), entry);
 		reverseMap.put(entry.val(), entry.id());
 		for (String id : entry.alias()) {
 			putAndCheck(id, entry);
 		}
+		return entry;
 	}
 
 	private void putAndCheck(String id, E entry) {

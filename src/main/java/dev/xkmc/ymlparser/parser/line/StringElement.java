@@ -273,7 +273,7 @@ public abstract class StringElement {
 	}
 
 	public static StringElement build(String str) {
-		return new CharSupplier(str).parseString().root;
+		return new LineCharSupplier(str).parseString().root;
 	}
 
 	public final int start;

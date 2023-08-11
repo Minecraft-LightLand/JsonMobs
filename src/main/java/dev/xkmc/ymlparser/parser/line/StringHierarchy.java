@@ -7,6 +7,7 @@ public enum StringHierarchy {
 	DQ(Type.STRING, '"', '"', ""),
 	SQ(Type.STRING, '\'', '\'', ""),
 	CURVE(Type.DATA, '{', '}', ";"),
+	PAREN(Type.DATA, '(', ')', ""),
 	BRACKET(Type.LIST, '[', ']', ",-"),
 	ARROW(Type.VAR, '<', '>', "."),
 	NONE(Type.NONE, '\0', '\0', " ");
@@ -35,7 +36,7 @@ public enum StringHierarchy {
 		return switch (type) {
 			case VAR, LIST -> List.of();
 			case STRING -> List.of(ARROW);
-			case DATA, NONE -> List.of(DQ, SQ, CURVE, BRACKET, ARROW);
+			case DATA, NONE -> List.of(DQ, SQ, PAREN, CURVE, BRACKET, ARROW);
 		};
 	}
 
