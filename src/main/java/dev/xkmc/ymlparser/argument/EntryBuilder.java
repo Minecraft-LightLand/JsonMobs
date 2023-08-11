@@ -58,6 +58,7 @@ public class EntryBuilder<T> {
 			}
 		}
 
+		@SuppressWarnings({"rawtype", "unsafe", "unchecked"})
 		<T> void fill(T obj, IArgumentProvider pvd) throws Exception {
 			pvd.handleNamed(this::fillEntry);
 			for (var e : remain) {
@@ -68,7 +69,15 @@ public class EntryBuilder<T> {
 			for (var pair : list) {
 				ArgumentField field = pair.getFirst();
 				var entry = pair.getSecond();
-				field.field().set(obj, entry.parseValue(field.dataType()));
+				var value = entry.parseValue(field.dataType());
+				if (value instanceof Collection coll) {
+					var old = field.field().get(obj);
+					if (old instanceof Collection oldColl) {
+						oldColl.addAll(coll);
+						continue;
+					}
+				}
+				field.field().set(obj, value);
 			}
 		}
 

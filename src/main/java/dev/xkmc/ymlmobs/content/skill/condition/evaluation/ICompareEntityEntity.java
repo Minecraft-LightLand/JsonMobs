@@ -4,6 +4,6 @@ import net.minecraft.world.entity.LivingEntity;
 
 public interface ICompareEntityEntity {
 
-	boolean check(LivingEntity caster, LivingEntity targetEntity);
+	boolean check(LivingEntity entity, LivingEntity targetEntity);
 
 }

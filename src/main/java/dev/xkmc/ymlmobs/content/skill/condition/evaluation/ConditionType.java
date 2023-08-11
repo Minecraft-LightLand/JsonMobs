@@ -9,6 +9,14 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface ConditionType {
 
-	EvaluationType value();
+	String[] author() default "";
+
+	EvaluationType[] value();
+
+	String name();
+
+	String[] aliases() default {};
+
+	String description();
 
 }

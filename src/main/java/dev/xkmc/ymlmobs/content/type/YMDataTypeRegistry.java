@@ -3,8 +3,11 @@ package dev.xkmc.ymlmobs.content.type;
 import dev.xkmc.ymlmobs.content.skill.condition.action.*;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionAction;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
+import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
+import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.parse.ConditionInsType;
 import dev.xkmc.ymlmobs.content.skill.condition.parse.ConditionMetaType;
+import dev.xkmc.ymlmobs.content.skill.condition.type.entity.BurningCondition;
 import dev.xkmc.ymlmobs.content.skill.core.MechanicInstance;
 import dev.xkmc.ymlmobs.content.skill.core.SkillMechanic;
 import dev.xkmc.ymlmobs.content.skill.core.SkillTargeter;
@@ -48,13 +51,19 @@ public class YMDataTypeRegistry {
 			regConditionAction("orelsecast", OrElseCastAction.class).desc(reg, "If condition is not met, replace skill with another skill");
 		}
 
+		// condition
 		{
-
+			regSkillCondition(reg, BurningCondition.class);
 		}
 	}
 
 	protected static <T extends ConditionAction> MetaTypeEntry<ConditionAction> regConditionAction(String id, Class<T> cls, String... alias) {
 		return CONDITION_ACTION.register(new MetaTypeEntry<>(CONDITION_ACTION, id, cls, alias));
+	}
+
+	protected static <T extends SkillCondition> void regSkillCondition(DataTypeLangGen reg, Class<T> cls) {
+		ConditionType type = cls.getAnnotation(ConditionType.class);
+		CONDITION.register(new MetaTypeEntry<>(CONDITION, type.name(), cls, type.aliases())).desc(reg, type.description());
 	}
 
 	public static void register() {

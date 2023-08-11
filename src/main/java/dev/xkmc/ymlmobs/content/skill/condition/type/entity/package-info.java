@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.ymlmobs.content.skill.condition.type.target;
+package dev.xkmc.ymlmobs.content.skill.condition.type.entity;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

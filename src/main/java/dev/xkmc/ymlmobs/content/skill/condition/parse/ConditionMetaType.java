@@ -34,8 +34,10 @@ public class ConditionMetaType extends MetaTypeRegistry<ISkillCondition> {
 		if (type == null) {
 			throw new IllegalStateException("Condition " + entry.id() + " has no type specified");
 		}
-		if (!type.value().getTypeClass().isAssignableFrom(entry.val())) {
-			throw new IllegalStateException("Condition " + entry.id() + " does not implement its type");
+		for (var et : type.value()) {
+			if (!et.getTypeClass().isAssignableFrom(entry.val())) {
+				throw new IllegalStateException("Condition " + entry.id() + " does not implement its type");
+			}
 		}
 	}
 
