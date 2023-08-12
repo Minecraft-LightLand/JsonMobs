@@ -17,6 +17,23 @@ public class YMConfig {
 
 	public static class Common {
 
+		public ForgeConfigSpec.BooleanValue isTargetSelf;
+		public ForgeConfigSpec.BooleanValue isTargetPlayers;
+		public ForgeConfigSpec.BooleanValue isTargetArmorStands;
+		public ForgeConfigSpec.BooleanValue isTargetMarkers;
+		public ForgeConfigSpec.BooleanValue isTargetCreativeMode;
+		public ForgeConfigSpec.BooleanValue isTargetSpectatorMode;
+		public ForgeConfigSpec.BooleanValue isTargetCitizensNPCs;
+		public ForgeConfigSpec.BooleanValue isTargetAnimals;
+		public ForgeConfigSpec.BooleanValue isTargetCreatures;
+		public ForgeConfigSpec.BooleanValue isTargetMonsters;
+		public ForgeConfigSpec.BooleanValue isTargetWaterMobs;
+		public ForgeConfigSpec.BooleanValue isTargetFlyingMobs;
+		public ForgeConfigSpec.BooleanValue isTargetSameFaction;
+		public ForgeConfigSpec.BooleanValue isTargetOwner;
+		public ForgeConfigSpec.BooleanValue isTargetNonMythic;
+		public ForgeConfigSpec.BooleanValue isTargetVillagers;
+
 		Common(ForgeConfigSpec.Builder builder) {
 		}
 

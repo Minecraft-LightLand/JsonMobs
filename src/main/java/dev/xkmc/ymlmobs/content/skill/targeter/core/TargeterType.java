@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface TargeterType {
 
+	TargetTypes type();
+
 	String[] author() default "";
 
 	String name();

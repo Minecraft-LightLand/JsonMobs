@@ -5,6 +5,7 @@ import dev.xkmc.ymlmobs.content.skill.execution.SkillInitiateData;
 import dev.xkmc.ymlmobs.content.skill.execution.SkillTargetingData;
 import dev.xkmc.ymlmobs.content.skill.execution.TriggerContext;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.SkillTargeter;
+import dev.xkmc.ymlmobs.util.LevelPosYaw;
 import dev.xkmc.ymlparser.argument.Argument;
 
 import javax.annotation.Nullable;
@@ -16,7 +17,8 @@ public class MechanicInstance {
 	public static class Builder {
 
 		private final SkillMechanic type;
-		private SkillTargeter target = SkillTargeter.TRIGGER;
+		@Nullable
+		private SkillTargeter target = null;
 		private SkillTrigger trigger = SkillTrigger.COMBAT;
 		private HealthModifier healthMod = HealthModifier.NULL;
 		private double chance = 1;
@@ -68,6 +70,7 @@ public class MechanicInstance {
 	}
 
 	protected final SkillMechanic mechanic;
+	@Nullable
 	protected final SkillTargeter targeter;
 	protected final SkillTrigger trigger;
 	protected final HealthModifier healthMod;
@@ -76,11 +79,10 @@ public class MechanicInstance {
 	protected final List<ConditionInstance> conditionsTarget;
 	protected final List<ConditionInstance> conditionsTrigger;
 
-
 	@Argument(name = "forceSync", aliases = {"sync"}, optional = true, description = "Sets the execution of the mechanic to the main thread instead of async.")
 	protected boolean forceSync = false;
 
-	@Argument(name = "targetIsOrigin", optional = true, description = "Sets the origin to the target's location instead of the caster's")
+	@Argument(name = "targetIsOrigin", optional = true, description = "Sets the origin to the target's location instead of the caster's. Works on Mechanics only.")
 	protected boolean targetIsOrigin = false;
 
 	@Nullable
@@ -90,7 +92,7 @@ public class MechanicInstance {
 	//protected final Map<UUID, Long> cooldowns = Maps.newConcurrentMap();
 	//protected boolean executeAfterDeath = false;
 
-	private MechanicInstance(SkillMechanic type, SkillTargeter target, SkillTrigger trigger,
+	private MechanicInstance(SkillMechanic type, @Nullable SkillTargeter target, SkillTrigger trigger,
 							 List<ConditionInstance> conditions,
 							 List<ConditionInstance> conditionsTarget,
 							 List<ConditionInstance> conditionsTrigger,
@@ -105,8 +107,14 @@ public class MechanicInstance {
 		this.chance = chance;
 	}
 
-	public void run(TriggerContext trigger) {
-		SkillInitiateData init = new SkillInitiateData(trigger, mechanic);
+	public void run(TriggerContext trigger, @Nullable SkillTargetingData parent) {
+		LevelPosYaw origin;
+		if (parent == null) {
+			origin = trigger.getCaster().pos();
+		} else {
+			origin = parent.parent.getOrigin();
+		}
+		SkillInitiateData init = new SkillInitiateData(trigger, mechanic, parent, origin);
 		for (var c : conditionsTrigger) {
 			c.processTrigger(init, trigger);
 			if (init.isRemoved()) break;
@@ -119,21 +127,13 @@ public class MechanicInstance {
 		}
 		init.lock();
 		if (init.size() == 0) return;
-		SkillTargetingData targeting = new SkillTargetingData(init, targeter.getEntities(init), targeter.getBlocks(init));
-		targeting.entityTargets.removeIf(data -> {
-			for (var c : conditionsTarget) {
-				c.processTargetEntity(targeting, data);
-				if (data.isRemoved()) break;
-			}
-			return data.size() == 0;
-		});
-		targeting.blockTargets.removeIf(data -> {
-			for (var c : conditionsTarget) {
-				c.processTargetBlock(targeting, data);
-				if (data.isRemoved()) break;
-			}
-			return data.size() == 0;
-		});
+		SkillTargetingData targeting = init.searchTarget(targeter);
+		List<ConditionInstance> targetCond = new ArrayList<>();
+		if (targeter != null) {
+			targetCond.addAll(targeter.targetConditions);
+		}
+		targetCond.addAll(conditionsTarget);
+		targeting.filterTarget(targetCond);
 		//TODO
 	}
 

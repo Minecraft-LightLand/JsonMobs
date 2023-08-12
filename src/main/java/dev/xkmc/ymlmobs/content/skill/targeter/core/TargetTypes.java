@@ -1,0 +1,39 @@
+package dev.xkmc.ymlmobs.content.skill.targeter.core;
+
+import dev.xkmc.ymlmobs.content.skill.targeter.types.*;
+
+public enum TargetTypes {
+	SINGLE_BLOCK(SingleBlockTargeter.class, true, false, true),
+	MULTI_BLOCK(MultiBlockTargeter.class, false, false, true),
+	META_BLOCK(MetaBlockTargeter.class, false, true, true),
+	SINGLE_ENTITY(SingleEntityTargeter.class, true, false, false),
+	MULTI_ENTITY(MultiEntityTargeter.class, false, false, false),
+	META_ENTITY(MetaEntityTargeter.class, false, true, false);
+
+	private final Class<? extends SkillTargeter> cls;
+	private final boolean single, meta, block;
+
+	TargetTypes(Class<? extends SkillTargeter> cls, boolean single, boolean meta, boolean block) {
+		this.cls = cls;
+		this.single = single;
+		this.meta = meta;
+		this.block = block;
+	}
+
+	public boolean isSingle() {
+		return single;
+	}
+
+	public boolean isMeta() {
+		return meta;
+	}
+
+	public boolean isBlock() {
+		return block;
+	}
+
+	public boolean isEntity() {
+		return !block;
+	}
+
+}

@@ -16,7 +16,7 @@ public record EvaluationContext(SkillCaster caster,
 	}
 
 	public static EvaluationContext ofTarget(SkillCaster caster, @Nullable EntityDataContext target) {
-		return new EvaluationContext(caster, target, target == null ? null : LevelPosYaw.of(target.get()));
+		return new EvaluationContext(caster, target, target == null ? null : target.pos());
 	}
 
 	public static EvaluationContext ofTargetPos(SkillCaster caster, LevelPosYaw pos) {
