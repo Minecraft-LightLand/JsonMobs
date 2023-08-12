@@ -1,26 +1,25 @@
-package dev.xkmc.ymlmobs.content.skill.condition.entries.cpos;
+package dev.xkmc.ymlmobs.content.skill.condition.entries.entity;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
-import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ICompareEntityPos;
-import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
-import dev.xkmc.ymlmobs.util.LevelPosYaw;
+import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.entity.EntityTypeTest;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 @ConditionType(
-		type = EvaluationType.POS,
-		author = "Ashijin",
+		type = EvaluationType.ENTITY,
+		author = {"Ashijin", "lcy0x1"},
 		name = "playersInRadius",
 		aliases = {"pir", "playerInRadius"},
 		description = "Checks for a given number of players within a radius of the target"
 )
-public class PlayersInRadiusCondition extends SkillCondition implements ICompareEntityPos {
+public class PlayersInRadiusCondition extends SkillCondition implements IEntityCondition {
 
 	@Argument(
 			name = "amount",
@@ -46,11 +45,13 @@ public class PlayersInRadiusCondition extends SkillCondition implements ICompare
 	public boolean ignoreSpectator = true;
 
 	@Override
-	public boolean check(EntityDataContext target, LevelPosYaw location) {
+	public boolean check(EntityDataContext target) {
+		Vec3 vec = target.get().position();
 		double r = distance.get(target);
 		double radiusSq = r * r;
-		return this.amount.test(location.level().getEntities(EntityTypeTest.forClass(Player.class),
-				AABB.ofSize(location.asVec(), r, r, r),
-				e -> (!ignoreSpectator || !e.isInvulnerable()) && e.distanceToSqr(location.asVec()) < radiusSq).size());
+		return this.amount.test(target.get().level().getEntities(EntityTypeTest.forClass(Player.class),
+				target.get().getBoundingBox().inflate(r),
+				e -> (!ignoreSpectator || !e.isInvulnerable()) && e.distanceToSqr(vec) < radiusSq).size());
 	}
+
 }

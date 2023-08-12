@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.ymlmobs.content.skill.core.execution;
+package dev.xkmc.ymlmobs.content.skill.targeter.entries.pos;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

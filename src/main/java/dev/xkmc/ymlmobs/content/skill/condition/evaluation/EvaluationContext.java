@@ -1,16 +1,27 @@
 package dev.xkmc.ymlmobs.content.skill.condition.evaluation;
 
-import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
-import dev.xkmc.ymlmobs.content.skill.core.execution.SkillCaster;
+import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
+import dev.xkmc.ymlmobs.content.skill.execution.SkillCaster;
 import dev.xkmc.ymlmobs.util.LevelPosYaw;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.BlockPos;
 
-public interface EvaluationContext {
+import javax.annotation.Nullable;
 
-	SkillCaster getCaster();
+public record EvaluationContext(SkillCaster caster,
+								@Nullable EntityDataContext focus,
+								@Nullable LevelPosYaw pos
+) {
 
-	EntityDataContext getTargetEntity();
+	public static EvaluationContext ofCaster(SkillCaster caster) {
+		return ofTarget(caster, caster);
+	}
 
-	LevelPosYaw getTargetPos();
+	public static EvaluationContext ofTarget(SkillCaster caster, @Nullable EntityDataContext target) {
+		return new EvaluationContext(caster, target, target == null ? null : LevelPosYaw.of(target.get()));
+	}
+
+	public static EvaluationContext ofBlockPos(SkillCaster caster, BlockPos pos) {
+		return new EvaluationContext(caster, caster, LevelPosYaw.of(caster.get().level(), pos));
+	}
 
 }

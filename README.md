@@ -22,4 +22,8 @@
 - Variables
 - Multi-Part Health Modifier
 - Variables in Condition
-- 
+
+## Mechanics
+- Multiple condition actions
+  - When a condition terminates the main skill (cancelled, or cast another skill instead), later conditions will not execute even if they would potentially add new skills. However, it would not remove already added "instead" skills.
+  - If you want to add `Cast` actions that could be removed by termination, add it after termination action

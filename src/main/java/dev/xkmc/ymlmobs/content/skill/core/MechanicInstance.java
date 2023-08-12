@@ -1,6 +1,11 @@
 package dev.xkmc.ymlmobs.content.skill.core;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
+import dev.xkmc.ymlmobs.content.skill.execution.SkillCaster;
+import dev.xkmc.ymlmobs.content.skill.execution.SkillInitiateData;
+import dev.xkmc.ymlmobs.content.skill.execution.SkillTargetingData;
+import dev.xkmc.ymlmobs.content.skill.execution.TriggerContext;
+import dev.xkmc.ymlmobs.content.skill.targeter.core.SkillTargeter;
 import dev.xkmc.ymlparser.argument.Argument;
 
 import javax.annotation.Nullable;
@@ -12,8 +17,7 @@ public class MechanicInstance {
 	public static class Builder {
 
 		private final SkillMechanic type;
-		@Nullable
-		private SkillTargeter target;
+		private SkillTargeter target = SkillTargeter.TRIGGER;
 		private SkillTrigger trigger = SkillTrigger.COMBAT;
 		private HealthModifier healthMod = HealthModifier.NULL;
 		private double chance = 1;
@@ -65,7 +69,6 @@ public class MechanicInstance {
 	}
 
 	protected final SkillMechanic mechanic;
-	@Nullable
 	protected final SkillTargeter targeter;
 	protected final SkillTrigger trigger;
 	protected final HealthModifier healthMod;
@@ -88,7 +91,7 @@ public class MechanicInstance {
 	//protected final Map<UUID, Long> cooldowns = Maps.newConcurrentMap();
 	//protected boolean executeAfterDeath = false;
 
-	private MechanicInstance(SkillMechanic type, @Nullable SkillTargeter target, SkillTrigger trigger,
+	private MechanicInstance(SkillMechanic type, SkillTargeter target, SkillTrigger trigger,
 							 List<ConditionInstance> conditions,
 							 List<ConditionInstance> conditionsTarget,
 							 List<ConditionInstance> conditionsTrigger,
@@ -101,6 +104,38 @@ public class MechanicInstance {
 		this.conditionsTrigger = conditionsTrigger;
 		this.healthMod = healthMod;
 		this.chance = chance;
+	}
+
+	public void run(SkillCaster caster, TriggerContext trigger) {
+		SkillInitiateData init = new SkillInitiateData(caster, mechanic);
+		for (var c : conditionsTrigger) {
+			c.processTrigger(init, trigger);
+			if (init.isRemoved()) break;
+		}
+		if (!init.isRemoved()) {
+			for (var c : conditions) {
+				c.processCaster(init);
+				if (init.isRemoved()) break;
+			}
+		}
+		init.lock();
+		if (init.size() == 0) return;
+		SkillTargetingData targeting = targeter.collectTargets(init);
+		targeting.entityTargets.removeIf(data -> {
+			for (var c : conditionsTarget) {
+				c.processTargetEntity(targeting, data);
+				if (data.isRemoved()) break;
+			}
+			return data.size() == 0;
+		});
+		targeting.blockTargets.removeIf(data -> {
+			for (var c : conditionsTarget) {
+				c.processTargetBlock(targeting, data);
+				if (data.isRemoved()) break;
+			}
+			return data.size() == 0;
+		});
+		//TODO
 	}
 
 }

@@ -12,4 +12,9 @@ public class SkillDefinition extends SkillMechanic {
 
 	//protected Optional<Skill> onCooldownSkill = Optional.empty();
 
+	public SkillDefinition() {
+
+	}
+
+
 }

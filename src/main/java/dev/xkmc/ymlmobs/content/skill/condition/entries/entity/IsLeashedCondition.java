@@ -4,7 +4,7 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
-import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
+import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
 import net.minecraft.world.entity.Mob;
 
 @ConditionType(
