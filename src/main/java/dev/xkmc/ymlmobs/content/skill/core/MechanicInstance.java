@@ -1,7 +1,6 @@
 package dev.xkmc.ymlmobs.content.skill.core;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
-import dev.xkmc.ymlmobs.content.skill.execution.SkillCaster;
 import dev.xkmc.ymlmobs.content.skill.execution.SkillInitiateData;
 import dev.xkmc.ymlmobs.content.skill.execution.SkillTargetingData;
 import dev.xkmc.ymlmobs.content.skill.execution.TriggerContext;
@@ -106,8 +105,8 @@ public class MechanicInstance {
 		this.chance = chance;
 	}
 
-	public void run(SkillCaster caster, TriggerContext trigger) {
-		SkillInitiateData init = new SkillInitiateData(caster, mechanic);
+	public void run(TriggerContext trigger) {
+		SkillInitiateData init = new SkillInitiateData(trigger, mechanic);
 		for (var c : conditionsTrigger) {
 			c.processTrigger(init, trigger);
 			if (init.isRemoved()) break;
@@ -120,7 +119,7 @@ public class MechanicInstance {
 		}
 		init.lock();
 		if (init.size() == 0) return;
-		SkillTargetingData targeting = targeter.collectTargets(init);
+		SkillTargetingData targeting = new SkillTargetingData(init, targeter.getEntities(init), targeter.getBlocks(init));
 		targeting.entityTargets.removeIf(data -> {
 			for (var c : conditionsTarget) {
 				c.processTargetEntity(targeting, data);

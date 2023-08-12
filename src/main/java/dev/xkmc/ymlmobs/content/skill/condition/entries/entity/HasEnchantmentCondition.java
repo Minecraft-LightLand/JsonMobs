@@ -1,12 +1,13 @@
 package dev.xkmc.ymlmobs.content.skill.condition.entries.entity;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
-import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
+import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
 import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
@@ -27,6 +28,6 @@ public class HasEnchantmentCondition extends SkillCondition implements IEntityCo
 
 	@Override
 	public boolean check(EntityDataContext entity) {
-		return level.test(EnchantmentHelper.getEnchantmentLevel(enchantment, entity.get()));
+		return entity.get() instanceof LivingEntity le && level.test(EnchantmentHelper.getEnchantmentLevel(enchantment, le));
 	}
 }

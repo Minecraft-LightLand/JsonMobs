@@ -26,10 +26,12 @@ public record ConditionInstance(ISkillCondition condition, ConditionAction actio
 	}
 
 	public void processTargetEntity(SkillTargetingData targeting, SkillTargetEntityData data) {
-		//TODO
+		EvaluationContext ctx = EvaluationContext.ofTarget(data.caster(), data.target());
+		action.process(ctx, data, condition.evaluate(ctx));
 	}
 
 	public void processTargetBlock(SkillTargetingData targeting, SkillTargetBlockData data) {
-		//TODO
+		EvaluationContext ctx = EvaluationContext.ofTargetPos(data.caster(), data.pos());
+
 	}
 }

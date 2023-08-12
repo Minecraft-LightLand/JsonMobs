@@ -1,7 +1,7 @@
 package dev.xkmc.ymlmobs.content.skill.condition.entries.entity;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
-import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
+import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
 import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
@@ -17,7 +17,7 @@ public class TargetInLineOfSightCondition extends SkillCondition implements IEnt
 
 	@Override
 	public boolean check(EntityDataContext entity) {
-		return entity.get() instanceof Mob mob && mob.getTarget() != null && entity.get().hasLineOfSight(mob.getTarget());
+		return entity.get() instanceof Mob mob && mob.getTarget() != null && mob.hasLineOfSight(mob.getTarget());
 	}
 
 }

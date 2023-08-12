@@ -2,7 +2,7 @@ package dev.xkmc.ymlmobs.content.skill.condition.entries.pos;
 
 import com.google.common.collect.Sets;
 import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
-import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
+import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IPosCondition;
 import dev.xkmc.ymlmobs.util.LevelPosYaw;

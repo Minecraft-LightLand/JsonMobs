@@ -5,7 +5,7 @@ import dev.xkmc.ymlmobs.content.skill.condition.action.*;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionAction;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
 import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
-import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
+import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.parse.ConditionInsType;
 import dev.xkmc.ymlmobs.content.skill.condition.parse.ConditionMetaType;
 import dev.xkmc.ymlmobs.content.skill.core.MechanicInstance;

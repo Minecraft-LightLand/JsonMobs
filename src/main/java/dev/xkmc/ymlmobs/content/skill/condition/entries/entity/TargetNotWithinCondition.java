@@ -1,7 +1,7 @@
 package dev.xkmc.ymlmobs.content.skill.condition.entries.entity;
 
+import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
-import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
 import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
@@ -21,7 +21,7 @@ public class TargetNotWithinCondition extends SkillCondition implements IEntityC
 
 	@Override
 	public boolean check(EntityDataContext entity) {
-		return !(entity.get() instanceof Mob mob && mob.getTarget() != null && mob.distanceTo(mob.getTarget()) <= distance);
+		return entity.get() instanceof Mob mob && !(mob.getTarget() != null && mob.distanceTo(mob.getTarget()) <= distance);
 	}
 
 }

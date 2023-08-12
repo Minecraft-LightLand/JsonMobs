@@ -15,8 +15,12 @@ public class SkillTargetEntityData extends SkillModifiableData {
 		return initial;
 	}
 
-	public EntityDataContext pos() {
+	public EntityDataContext target() {
 		return target;
+	}
+
+	public SkillCaster caster() {
+		return initial().caster();
 	}
 
 }

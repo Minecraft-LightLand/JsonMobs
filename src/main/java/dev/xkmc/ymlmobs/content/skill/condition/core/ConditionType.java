@@ -1,4 +1,6 @@
-package dev.xkmc.ymlmobs.content.skill.condition.evaluation;
+package dev.xkmc.ymlmobs.content.skill.condition.core;
+
+import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

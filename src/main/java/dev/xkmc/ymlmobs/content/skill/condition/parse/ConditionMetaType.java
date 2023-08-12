@@ -2,7 +2,7 @@ package dev.xkmc.ymlmobs.content.skill.condition.parse;
 
 import com.mojang.datafixers.util.Either;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ISkillCondition;
-import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
+import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionType;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.type.MetaTypeEntry;

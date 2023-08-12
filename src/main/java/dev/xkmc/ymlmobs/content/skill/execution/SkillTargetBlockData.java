@@ -21,4 +21,8 @@ public class SkillTargetBlockData extends SkillModifiableData {
 		return pos;
 	}
 
+	public SkillCaster caster() {
+		return initial().caster();
+	}
+
 }

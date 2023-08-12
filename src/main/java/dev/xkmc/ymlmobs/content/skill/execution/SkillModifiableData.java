@@ -64,4 +64,7 @@ public abstract class SkillModifiableData {
 		}
 		return ans;
 	}
+
+	public abstract SkillCaster caster();
+
 }
