@@ -4,9 +4,9 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
@@ -26,7 +26,7 @@ public class HasEnchantmentCondition extends SkillCondition implements IEntityCo
 	public IRange level = IRange.POSITIVE;
 
 	@Override
-	public boolean check(LivingEntity entity) {
-		return level.test(EnchantmentHelper.getEnchantmentLevel(enchantment, entity));
+	public boolean check(EntityDataContext entity) {
+		return level.test(EnchantmentHelper.getEnchantmentLevel(enchantment, entity.get()));
 	}
 }

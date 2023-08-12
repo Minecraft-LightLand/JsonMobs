@@ -1,11 +1,13 @@
-package dev.xkmc.ymlmobs.content.skill.condition.entries.pos;
+package dev.xkmc.ymlmobs.content.skill.condition.entries.cpos;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
-import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IPosCondition;
+import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ICompareEntityPos;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlmobs.util.LevelPosYaw;
 import dev.xkmc.ymlparser.argument.Argument;
+import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.entity.EntityTypeTest;
@@ -18,7 +20,7 @@ import net.minecraft.world.phys.AABB;
 		aliases = {"pir", "playerInRadius"},
 		description = "Checks for a given number of players within a radius of the target"
 )
-public class PlayersInRadiusCondition extends SkillCondition implements IPosCondition {
+public class PlayersInRadiusCondition extends SkillCondition implements ICompareEntityPos {
 
 	@Argument(
 			name = "amount",
@@ -33,7 +35,7 @@ public class PlayersInRadiusCondition extends SkillCondition implements IPosCond
 			aliases = {"range", "r"},
 			description = "The radius to check in"
 	)
-	public double distance;//TODO change to DataHolder
+	public DataHolder<Double> distance;
 
 	@Argument(
 			name = "ignoreSpectator",
@@ -44,10 +46,11 @@ public class PlayersInRadiusCondition extends SkillCondition implements IPosCond
 	public boolean ignoreSpectator = true;
 
 	@Override
-	public boolean check(LevelPosYaw location) {
-		double radiusSq = distance * distance;
+	public boolean check(EntityDataContext target, LevelPosYaw location) {
+		double r = distance.get(target);
+		double radiusSq = r * r;
 		return this.amount.test(location.level().getEntities(EntityTypeTest.forClass(Player.class),
-				AABB.ofSize(location.asVec(), distance, distance, distance),
+				AABB.ofSize(location.asVec(), r, r, r),
 				e -> (!ignoreSpectator || !e.isInvulnerable()) && e.distanceToSqr(location.asVec()) < radiusSq).size());
 	}
 }

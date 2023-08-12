@@ -4,8 +4,8 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
-import net.minecraft.world.entity.LivingEntity;
 
 @ConditionType(
 		type = EvaluationType.ENTITY,
@@ -25,7 +25,7 @@ public class MovingCondition extends SkillCondition implements IEntityCondition 
 	public boolean exact = true;
 
 	@Override
-	public boolean check(LivingEntity entity) {
-		return entity.getDeltaMovement().length() > (exact ? 1e-3 : 0.05);
+	public boolean check(EntityDataContext entity) {
+		return entity.get().getDeltaMovement().length() > (exact ? 1e-3 : 0.05);
 	}
 }

@@ -4,10 +4,10 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 @ConditionType(
@@ -35,13 +35,13 @@ public class AltitudeCondition extends SkillCondition implements IEntityConditio
 	public double maxHeight = 30d;
 
 	@Override
-	public boolean check(LivingEntity target) {
-		BlockPos pos = target.blockPosition();
-		BlockState state = target.level().getBlockState(pos);
+	public boolean check(EntityDataContext target) {
+		BlockPos pos = target.get().blockPosition();
+		BlockState state = target.get().level().getBlockState(pos);
 		int diff = 0;
-		while (state.getCollisionShape(target.level(), pos).isEmpty()) {
+		while (state.getCollisionShape(target.get().level(), pos).isEmpty()) {
 			pos = pos.below();
-			state = target.level().getBlockState(pos);
+			state = target.get().level().getBlockState(pos);
 			diff++;
 			if (diff > maxHeight) {
 				break;

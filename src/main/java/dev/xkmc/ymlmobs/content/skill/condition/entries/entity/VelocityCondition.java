@@ -4,9 +4,9 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
-import net.minecraft.world.entity.LivingEntity;
 
 @ConditionType(
 		type = EvaluationType.ENTITY,
@@ -24,7 +24,7 @@ public class VelocityCondition extends SkillCondition implements IEntityConditio
 	public IRange velocity;
 
 	@Override
-	public boolean check(LivingEntity e) {
-		return velocity.test(e.getDeltaMovement().length());
+	public boolean check(EntityDataContext e) {
+		return velocity.test(e.get().getDeltaMovement().length());
 	}
 }

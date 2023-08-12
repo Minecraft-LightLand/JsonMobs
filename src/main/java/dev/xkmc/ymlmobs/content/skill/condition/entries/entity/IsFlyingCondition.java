@@ -4,8 +4,8 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import net.minecraft.world.entity.FlyingMob;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 @ConditionType(
@@ -18,8 +18,8 @@ import net.minecraft.world.entity.player.Player;
 public class IsFlyingCondition extends SkillCondition implements IEntityCondition {
 
 	@Override
-	public boolean check(LivingEntity e) {
-		return e instanceof FlyingMob || e instanceof Player player && player.getAbilities().flying;
+	public boolean check(EntityDataContext e) {
+		return e.get() instanceof FlyingMob || e.get() instanceof Player player && player.getAbilities().flying;
 	}
 
 }

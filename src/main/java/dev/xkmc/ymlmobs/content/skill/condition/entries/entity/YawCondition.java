@@ -4,9 +4,9 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
-import net.minecraft.world.entity.LivingEntity;
 
 @ConditionType(
 		type = EvaluationType.ENTITY,
@@ -24,8 +24,8 @@ public class YawCondition extends SkillCondition implements IEntityCondition {
 	public IRange yaw;
 
 	@Override
-	public boolean check(LivingEntity e) {
-		return this.yaw.test(e.getYRot());
+	public boolean check(EntityDataContext e) {
+		return this.yaw.test(e.get().getYRot());
 	}
 
 }

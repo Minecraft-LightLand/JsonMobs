@@ -7,7 +7,7 @@ public enum EvaluationType {
 	ENTITY(new Type<>(IEntityCondition.class, (a, b) -> a.check(b.getTargetEntity()))),
 	POS(new Type<>(IPosCondition.class, (a, b) -> a.check(b.getTargetPos()))),
 	ENTITY_COMPARE(new Type<>(ICompareEntityEntity.class, (a, b) -> a.check(b.getCaster(), b.getTargetEntity()))),
-	ENTITY_POS_COMPARE(new Type<>(ICompareEntityPos.class, (a, b) -> a.check(b.getCaster(), b.getTargetPos()))),
+	ENTITY_POS_COMPARE(new Type<>(ICompareEntityPos.class, (a, b) -> a.check(b.getTargetEntity(), b.getTargetPos()))),
 
 	//POS_COMPARE(),
 	//META(cls),

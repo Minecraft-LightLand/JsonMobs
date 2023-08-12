@@ -4,7 +4,7 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
-import net.minecraft.world.entity.LivingEntity;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import net.minecraft.world.entity.Mob;
 
 @ConditionType(
@@ -15,8 +15,8 @@ import net.minecraft.world.entity.Mob;
 public class HasAICondition extends SkillCondition implements IEntityCondition {
 
 	@Override
-	public boolean check(LivingEntity e) {
-		return e instanceof Mob mob && !mob.isNoAi();
+	public boolean check(EntityDataContext e) {
+		return e.get() instanceof Mob mob && !mob.isNoAi();
 	}
 
 }

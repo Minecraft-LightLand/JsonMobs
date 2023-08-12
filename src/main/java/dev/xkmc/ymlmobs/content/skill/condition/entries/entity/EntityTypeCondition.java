@@ -4,9 +4,9 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +28,7 @@ public class EntityTypeCondition extends SkillCondition implements IEntityCondit
 	protected Set<EntityType<?>> entityTypes = new HashSet<>();
 
 	@Override
-	public boolean check(LivingEntity targetEntity) {
-		return this.entityTypes.contains(targetEntity.getType());
+	public boolean check(EntityDataContext targetEntity) {
+		return this.entityTypes.contains(targetEntity.get().getType());
 	}
 }

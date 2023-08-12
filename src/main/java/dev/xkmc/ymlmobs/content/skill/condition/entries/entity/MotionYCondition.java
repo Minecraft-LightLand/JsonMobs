@@ -4,9 +4,9 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
-import net.minecraft.world.entity.LivingEntity;
 
 @ConditionType(
 		type = EvaluationType.ENTITY,
@@ -28,8 +28,8 @@ public class MotionYCondition extends SkillCondition implements IEntityCondition
 	public boolean absolute = true;
 
 	@Override
-	public boolean check(LivingEntity entity) {
-		double y = entity.getDeltaMovement().y;
+	public boolean check(EntityDataContext entity) {
+		double y = entity.get().getDeltaMovement().y;
 		return velocity.test(absolute ? Math.abs(y) : y);
 	}
 

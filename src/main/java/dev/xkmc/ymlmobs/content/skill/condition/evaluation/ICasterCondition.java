@@ -1,9 +1,9 @@
 package dev.xkmc.ymlmobs.content.skill.condition.evaluation;
 
-import net.minecraft.world.entity.LivingEntity;
+import dev.xkmc.ymlmobs.content.skill.core.execution.SkillCaster;
 
 public interface ICasterCondition {
 
-	boolean check(LivingEntity entity);
+	boolean check(SkillCaster entity);
 
 }

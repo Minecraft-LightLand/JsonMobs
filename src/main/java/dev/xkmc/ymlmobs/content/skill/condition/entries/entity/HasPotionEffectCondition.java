@@ -4,12 +4,12 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 
 @ConditionType(
 		type = EvaluationType.ENTITY,
@@ -33,18 +33,18 @@ public class HasPotionEffectCondition extends SkillCondition implements IEntityC
 	public IRange duration = IRange.NULL;
 
 	@Override
-	public boolean check(LivingEntity entity) {
+	public boolean check(EntityDataContext entity) {
 		if (category != null) {
-			return entity.getActiveEffects().stream().anyMatch(e -> e.getEffect().getCategory() == category);
+			return entity.get().getActiveEffects().stream().anyMatch(e -> e.getEffect().getCategory() == category);
 		}
 		if (effectType != null) {
-			MobEffectInstance ins = entity.getEffect(effectType);
+			MobEffectInstance ins = entity.get().getEffect(effectType);
 			if (ins == null) {
 				return false;
 			}
 			return level.test(ins.getAmplifier()) && duration.test(ins.getDuration());
 		}
-		return !entity.getActiveEffects().isEmpty();
+		return !entity.get().getActiveEffects().isEmpty();
 	}
 
 }

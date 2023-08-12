@@ -4,8 +4,8 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.LivingEntity;
 
 @ConditionType(
 		author = "Pine",
@@ -16,7 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 public class IsBabyCondition extends SkillCondition implements IEntityCondition {
 
 	@Override
-	public boolean check(LivingEntity entity) {
-		return entity instanceof AgeableMob mob && mob.isBaby();
+	public boolean check(EntityDataContext entity) {
+		return entity.get() instanceof AgeableMob mob && mob.isBaby();
 	}
 }

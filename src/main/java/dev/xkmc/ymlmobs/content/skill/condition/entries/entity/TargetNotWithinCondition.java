@@ -4,8 +4,8 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 
 @ConditionType(
@@ -20,8 +20,8 @@ public class TargetNotWithinCondition extends SkillCondition implements IEntityC
 	public double distance;
 
 	@Override
-	public boolean check(LivingEntity entity) {
-		return !(entity instanceof Mob mob && mob.getTarget() != null && mob.distanceTo(mob.getTarget()) <= distance);
+	public boolean check(EntityDataContext entity) {
+		return !(entity.get() instanceof Mob mob && mob.getTarget() != null && mob.distanceTo(mob.getTarget()) <= distance);
 	}
 
 }

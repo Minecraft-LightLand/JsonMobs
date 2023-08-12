@@ -4,7 +4,7 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
-import net.minecraft.world.entity.LivingEntity;
+import dev.xkmc.ymlmobs.content.skill.core.execution.EntityDataContext;
 
 @ConditionType(
 		author = "Joshinn",
@@ -16,8 +16,8 @@ import net.minecraft.world.entity.LivingEntity;
 public class BurningCondition extends SkillCondition implements IEntityCondition {
 
 	@Override
-	public boolean check(LivingEntity entity) {
-		return entity.isOnFire();
+	public boolean check(EntityDataContext entity) {
+		return entity.get().isOnFire();
 	}
 
 }
