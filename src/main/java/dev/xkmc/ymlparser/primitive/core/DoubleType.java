@@ -7,6 +7,8 @@ import dev.xkmc.ymlparser.parser.line.StringElement;
 
 public class DoubleType extends NumericType<Double> {
 
+	public static final DataHolder<Double> ZERO = new StaticData<>(0d);
+
 	public DoubleType(String name) {
 		super(name);
 	}

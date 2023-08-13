@@ -1,5 +1,7 @@
 package dev.xkmc.ymlparser.argument;
 
+import dev.xkmc.ymlparser.compound.CompoundValue;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -16,5 +18,7 @@ public @interface Argument {
 	String description();
 
 	boolean optional() default false;
+
+	Class<?> compound() default CompoundValue.class;
 
 }

@@ -17,24 +17,42 @@ public class YMConfig {
 
 	public static class Common {
 
-		public ForgeConfigSpec.BooleanValue isTargetSelf;
-		public ForgeConfigSpec.BooleanValue isTargetPlayers;
-		public ForgeConfigSpec.BooleanValue isTargetArmorStands;
-		public ForgeConfigSpec.BooleanValue isTargetMarkers;
-		public ForgeConfigSpec.BooleanValue isTargetCreativeMode;
-		public ForgeConfigSpec.BooleanValue isTargetSpectatorMode;
-		public ForgeConfigSpec.BooleanValue isTargetCitizensNPCs;
-		public ForgeConfigSpec.BooleanValue isTargetAnimals;
-		public ForgeConfigSpec.BooleanValue isTargetCreatures;
-		public ForgeConfigSpec.BooleanValue isTargetMonsters;
-		public ForgeConfigSpec.BooleanValue isTargetWaterMobs;
-		public ForgeConfigSpec.BooleanValue isTargetFlyingMobs;
-		public ForgeConfigSpec.BooleanValue isTargetSameFaction;
-		public ForgeConfigSpec.BooleanValue isTargetOwner;
-		public ForgeConfigSpec.BooleanValue isTargetNonMythic;
-		public ForgeConfigSpec.BooleanValue isTargetVillagers;
+		public final ForgeConfigSpec.BooleanValue isTargetSelf;
+		public final ForgeConfigSpec.BooleanValue isTargetPlayers;
+		public final ForgeConfigSpec.BooleanValue isTargetCreativeMode;
+		public final ForgeConfigSpec.BooleanValue isTargetAnimals;
+		public final ForgeConfigSpec.BooleanValue isTargetCreatures;
+		public final ForgeConfigSpec.BooleanValue isTargetMonsters;
+		public final ForgeConfigSpec.BooleanValue isTargetWaterMobs;
+		public final ForgeConfigSpec.BooleanValue isTargetFlyingMobs;
+		public final ForgeConfigSpec.BooleanValue isTargetSameFaction;
+		public final ForgeConfigSpec.BooleanValue isTargetOwner;
 
 		Common(ForgeConfigSpec.Builder builder) {
+			builder.push("Targeters");
+			{
+				isTargetSelf = builder.comment("Entity targeters target caster itself by default, except SelfTargeter")
+						.define("TargetSelf", false);
+				isTargetPlayers = builder.comment("Entity targeters target players by default")
+						.define("TargetPlayers", true);
+				isTargetCreativeMode = builder.comment("Entity targeters target invulnerable mobs by default")
+						.define("TargetCreativeMode", false);
+				isTargetAnimals = builder.comment("Entity targeters target animals by default")
+						.define("TargetAnimals", true);
+				isTargetCreatures = builder.comment("Entity targeters target creatures by default")
+						.define("TargetCreatures", true);
+				isTargetMonsters = builder.comment("Entity targeters target Monsters by default")
+					.define("TargetMonsters", true);
+				isTargetWaterMobs = builder.comment("Entity targeters target water mobs by default")
+						.define("TargetWaterMobs", true);
+				isTargetFlyingMobs = builder.comment("Entity targeters target flying mobs by default")
+					.define("TargetFlyingMobs", true);
+				isTargetSameFaction = builder.comment("Entity targeters target mobs of sam faction by default")
+					.define("TargetSameFaction", true);
+				isTargetOwner = builder.comment("Entity targeters targets its owner by default")
+					.define("TargetOwner", true);
+			}
+			builder.pop();
 		}
 
 	}

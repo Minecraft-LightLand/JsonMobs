@@ -3,9 +3,9 @@ package dev.xkmc.ymlmobs.content.skill.targeter.core;
 import dev.xkmc.ymlmobs.content.skill.targeter.types.*;
 
 public enum TargetTypes {
-	SINGLE_BLOCK(SingleBlockTargeter.class, true, false, true),
-	MULTI_BLOCK(MultiBlockTargeter.class, false, false, true),
-	META_BLOCK(MetaBlockTargeter.class, false, true, true),
+	SINGLE_BLOCK(SinglePosTargeter.class, true, false, true),
+	MULTI_BLOCK(MultiPosTargeter.class, false, false, true),
+	META_BLOCK(MetaPosTargeter.class, false, true, true),
 	SINGLE_ENTITY(SingleEntityTargeter.class, true, false, false),
 	MULTI_ENTITY(MultiEntityTargeter.class, false, false, false),
 	META_ENTITY(MetaEntityTargeter.class, false, true, false);

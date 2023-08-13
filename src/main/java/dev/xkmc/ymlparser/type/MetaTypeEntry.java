@@ -4,6 +4,7 @@ import dev.xkmc.l2serial.util.Wrappers;
 import dev.xkmc.ymlparser.argument.ArgumentClassCache;
 import dev.xkmc.ymlparser.argument.EntryBuilder;
 import dev.xkmc.ymlparser.argument.IArgumentProvider;
+import dev.xkmc.ymlparser.compound.CompoundValue;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.registry.DataTypeLangGen;
@@ -29,10 +30,17 @@ public record MetaTypeEntry<T>(MetaTypeRegistry<T> reg, String id, Class<? exten
 	@Override
 	public void desc(DataTypeLangGen reg, String desc) {
 		IDataRegistryEntry.super.desc(reg, desc);
-		var list = Wrappers.get(ArgumentClassCache.get(val())::getArguments);
+		registerArgs(reg, val());
+	}
+
+	private static void registerArgs(DataTypeLangGen reg, Class<?> cls) {
+		var list = Wrappers.get(ArgumentClassCache.get(cls)::getArguments);
 		assert list != null;
 		for (var field : list) {
 			reg.addArg(field);
+			if (field.arg().compound() != CompoundValue.class) {
+				registerArgs(reg, field.arg().compound());
+			}
 		}
 	}
 

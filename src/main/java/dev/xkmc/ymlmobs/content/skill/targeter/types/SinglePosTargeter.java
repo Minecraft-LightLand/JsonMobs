@@ -1,17 +1,17 @@
 package dev.xkmc.ymlmobs.content.skill.targeter.types;
 
 import dev.xkmc.ymlmobs.content.skill.targeter.core.TargeterContext;
-import net.minecraft.core.BlockPos;
+import dev.xkmc.ymlmobs.util.LevelPosYaw;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public abstract class SingleBlockTargeter extends BlockTargeter {
+public abstract class SinglePosTargeter extends PosTargeter {
 
-	public abstract Optional<BlockPos> getBlock(TargeterContext init);
+	public abstract Optional<LevelPosYaw> getBlock(TargeterContext init);
 
 	@Override
-	public Stream<BlockPos> searchBlock(TargeterContext init) {
+	public Stream<LevelPosYaw> searchPos(TargeterContext init) {
 		return getBlock(init).stream();
 	}
 

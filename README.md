@@ -10,7 +10,10 @@
     - When using `#to#` and `#~#`, you can use scientific notations such as `-1.11e-1`
 - Condition composition supports `!`, `&&`, `||`, `^`, `==` operators.
   - Composite conditions always need to be wrapped by parenthesis `()`
-
+- Targeters default options:
+  - Creative and Spectator are merged into one options. Spectator option is removed
+  - Armor Stand, Marker, Villagers, NonMythic, NPCs options removed.
+  - Add target attackable types only.
 ## Features Implemented
 - Conditions
 - in-line conditions
