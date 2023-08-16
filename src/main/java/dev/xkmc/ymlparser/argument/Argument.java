@@ -19,6 +19,6 @@ public @interface Argument {
 
 	boolean optional() default false;
 
-	Class<?> compound() default CompoundValue.class;
+	Class<? extends CompoundValue> compound() default CompoundValue.class;
 
 }

@@ -2,9 +2,9 @@ package dev.xkmc.ymlparser.type;
 
 import dev.xkmc.l2serial.util.Wrappers;
 import dev.xkmc.ymlparser.argument.ArgumentClassCache;
+import dev.xkmc.ymlparser.argument.ArgumentField;
 import dev.xkmc.ymlparser.argument.EntryBuilder;
 import dev.xkmc.ymlparser.argument.IArgumentProvider;
-import dev.xkmc.ymlparser.compound.CompoundValue;
 import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.registry.DataTypeLangGen;
@@ -36,9 +36,9 @@ public record MetaTypeEntry<T>(MetaTypeRegistry<T> reg, String id, Class<? exten
 	private static void registerArgs(DataTypeLangGen reg, Class<?> cls) {
 		var list = Wrappers.get(ArgumentClassCache.get(cls)::getArguments);
 		assert list != null;
-		for (var field : list) {
+		for (ArgumentField field : list) {
 			reg.addArg(field);
-			if (field.arg().compound() != CompoundValue.class) {
+			if (field.isComplex()) {
 				registerArgs(reg, field.arg().compound());
 			}
 		}

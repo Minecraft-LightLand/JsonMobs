@@ -2,6 +2,7 @@ package dev.xkmc.ymlparser.argument;
 
 import dev.xkmc.l2serial.serialization.type_cache.ClassCache;
 import dev.xkmc.l2serial.serialization.type_cache.FieldCache;
+import dev.xkmc.ymlparser.compound.CompoundValue;
 import dev.xkmc.ymlparser.type.DataType;
 
 import java.util.Locale;
@@ -34,6 +35,10 @@ public final class ArgumentField {
 
 	public String descID() {
 		return parent.cls.getSimpleName().toLowerCase(Locale.ROOT) + "." + arg.name();
+	}
+
+	public boolean isComplex() {
+		return arg.compound() != CompoundValue.class;
 	}
 
 }

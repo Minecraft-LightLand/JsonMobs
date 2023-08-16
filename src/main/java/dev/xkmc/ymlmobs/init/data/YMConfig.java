@@ -42,15 +42,15 @@ public class YMConfig {
 				isTargetCreatures = builder.comment("Entity targeters target creatures by default")
 						.define("TargetCreatures", true);
 				isTargetMonsters = builder.comment("Entity targeters target Monsters by default")
-					.define("TargetMonsters", true);
+						.define("TargetMonsters", true);
 				isTargetWaterMobs = builder.comment("Entity targeters target water mobs by default")
 						.define("TargetWaterMobs", true);
 				isTargetFlyingMobs = builder.comment("Entity targeters target flying mobs by default")
-					.define("TargetFlyingMobs", true);
+						.define("TargetFlyingMobs", true);
 				isTargetSameFaction = builder.comment("Entity targeters target mobs of sam faction by default")
-					.define("TargetSameFaction", true);
+						.define("TargetSameFaction", true);
 				isTargetOwner = builder.comment("Entity targeters targets its owner by default")
-					.define("TargetOwner", true);
+						.define("TargetOwner", true);
 			}
 			builder.pop();
 		}
