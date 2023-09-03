@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.skill.mechanic.types;
+package dev.xkmc.ymlmobs.content.skill.mechanic.types.basic;
 
 import dev.xkmc.ymlmobs.content.skill.core.SkillMechanic;
 import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionContext;
@@ -16,7 +16,7 @@ import dev.xkmc.ymlparser.holder.DataHolder;
 )
 public class DelaySkill extends SkillMechanic {
 
-	@Argument(name = "delay", aliases = "t", description = "delay execution for x ticks")
+	@Argument(name = "ticks", aliases = "t", description = "delay execution for x ticks")
 	public DataHolder<Integer> delay;
 
 	@Override

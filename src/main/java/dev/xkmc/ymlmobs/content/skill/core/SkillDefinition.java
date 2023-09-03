@@ -6,6 +6,7 @@ import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionSequence;
 import dev.xkmc.ymlmobs.content.skill.execution.sequence.PendingSkill;
 import dev.xkmc.ymlmobs.content.skill.mechanic.core.MechanicType;
 import dev.xkmc.ymlmobs.content.skill.mechanic.core.SkillType;
+import dev.xkmc.ymlmobs.content.skill.mechanic.types.basic.IMetaSkill;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 		name = "metaskill",
 		description = "meta skill that holds several mechanics"
 )
-public class SkillDefinition extends SkillMechanic {
+public class SkillDefinition extends IMetaSkill {
 
 	protected List<MechanicInstance> skills = new LinkedList<>();
 

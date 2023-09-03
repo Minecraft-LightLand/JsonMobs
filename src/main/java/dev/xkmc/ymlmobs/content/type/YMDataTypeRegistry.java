@@ -11,6 +11,7 @@ import dev.xkmc.ymlmobs.content.skill.condition.parse.ConditionMetaType;
 import dev.xkmc.ymlmobs.content.skill.core.MechanicInstance;
 import dev.xkmc.ymlmobs.content.skill.core.SkillTrigger;
 import dev.xkmc.ymlmobs.content.skill.mechanic.core.MechanicTypeRegistry;
+import dev.xkmc.ymlmobs.content.skill.mechanic.types.template.RandomSkillType;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.TargeterTypeRegistry;
 import dev.xkmc.ymlmobs.init.YmlMobs;
 import dev.xkmc.ymlparser.registry.DataTypeLangGen;
@@ -35,6 +36,7 @@ public class YMDataTypeRegistry {
 	public static final TargeterTypeRegistry TARGET = new TargeterTypeRegistry("Targeter");
 	public static final MetaTypeRegistry<SkillTrigger> TRIGGER = new MetaTypeRegistry<>("Trigger");
 	public static final HealthModifierType HEALTH_MODIFIER = new HealthModifierType("HealthModifier");
+	public static final RandomSkillType RANDOM_SKILL = new RandomSkillType("RandomSkill");
 
 	// registered registries
 	public static final SkillInsType MECHANIC_INSTANCE = new SkillInsType();

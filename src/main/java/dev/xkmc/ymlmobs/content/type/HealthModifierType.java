@@ -5,21 +5,10 @@ import dev.xkmc.ymlparser.parser.core.ParserLogger;
 import dev.xkmc.ymlparser.parser.line.StringElement;
 import dev.xkmc.ymlparser.type.DataType;
 
-public class HealthModifierType implements DataType<HealthModifier> {
+public record HealthModifierType(String name) implements DataType<HealthModifier> {
 
 	private static double parseSub(String str, int start, int end) {
 		return Double.parseDouble(str.substring(start, str.length() - start - end));
-	}
-
-	private final String name;
-
-	public HealthModifierType(String name) {
-		this.name = name;
-	}
-
-	@Override
-	public String name() {
-		return name;
 	}
 
 	@Override

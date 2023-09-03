@@ -1,14 +1,10 @@
 package dev.xkmc.ymlmobs.content.skill.mechanic.core;
 
-import dev.xkmc.ymlmobs.content.skill.core.SkillDefinition;
 import dev.xkmc.ymlmobs.content.skill.core.SkillMechanic;
-import dev.xkmc.ymlmobs.content.skill.mechanic.types.DelaySkill;
-import dev.xkmc.ymlmobs.content.skill.mechanic.types.IEntitySkill;
-import dev.xkmc.ymlmobs.content.skill.mechanic.types.IPosSkill;
-import dev.xkmc.ymlmobs.content.skill.mechanic.types.ISelfSkill;
+import dev.xkmc.ymlmobs.content.skill.mechanic.types.basic.*;
 
 public enum SkillType {
-	META(SkillDefinition.class),
+	META(IMetaSkill.class),
 	DELAY(DelaySkill.class),
 	SELF(ISelfSkill.class),
 	ENTITY(IEntitySkill.class),

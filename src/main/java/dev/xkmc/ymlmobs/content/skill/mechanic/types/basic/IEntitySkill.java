@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.skill.mechanic.types;
+package dev.xkmc.ymlmobs.content.skill.mechanic.types.basic;
 
 import dev.xkmc.ymlmobs.content.skill.core.SkillMechanic;
 import dev.xkmc.ymlmobs.content.skill.execution.context.SkillTargetEntityData;

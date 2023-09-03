@@ -4,5 +4,6 @@ Data:
   - '0'
   - 'null'
   - []
-  - damage{a=1} @PIR{r=10;conditions=[  - hasaura{aura=Plagued} false  - haspotioneffect{type=WITHER;d=1to999999;l=0to254}
+  - randomskill{skills=[   damage{   a  =   1   }  ,   [   ignite   ,   1   ]]} @PIR{r=10;conditions=[  -
+    hasaura{aura=Plagued} false  - haspotioneffect{type=WITHER;d=1to999999;l=0to254}
     true  -message{m="abc<&br>\"%{}<1\u9999"}]} ~onTimer:20

@@ -30,8 +30,7 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Class<Integer> cls = int.class;
-		System.out.println(Integer.class + ", " + int.class);
+		testParse();
 	}
 
 	private static void testParse() throws Exception {

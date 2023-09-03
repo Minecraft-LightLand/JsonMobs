@@ -20,7 +20,7 @@ public enum TargetTypes {
 		this.block = block;
 	}
 
-	public Class<?> getTypeClass(){
+	public Class<?> getTypeClass() {
 		return cls;
 	}
 
