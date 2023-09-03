@@ -1,8 +1,8 @@
 package dev.xkmc.ymlmobs.content.skill.targeter.core;
 
-import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
-import dev.xkmc.ymlmobs.content.skill.execution.SkillInitiateData;
-import dev.xkmc.ymlmobs.content.skill.execution.SkillTargetingData;
+import dev.xkmc.ymlmobs.content.skill.execution.context.EntityDataContext;
+import dev.xkmc.ymlmobs.content.skill.execution.context.SkillInitiateData;
+import dev.xkmc.ymlmobs.content.skill.execution.context.SkillTargetingData;
 import dev.xkmc.ymlmobs.util.LevelPosYaw;
 import net.minecraft.world.level.Level;
 

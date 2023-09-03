@@ -1,7 +1,7 @@
 package dev.xkmc.ymlmobs.content.skill.targeter.types;
 
 import com.mojang.datafixers.util.Either;
-import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
+import dev.xkmc.ymlmobs.content.skill.execution.context.EntityDataContext;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.EntityTargetSorter;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.SkillTargeter;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.TargeterContext;

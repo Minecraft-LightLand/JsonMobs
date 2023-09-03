@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.skill.execution;
+package dev.xkmc.ymlmobs.content.skill.execution.sequence;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

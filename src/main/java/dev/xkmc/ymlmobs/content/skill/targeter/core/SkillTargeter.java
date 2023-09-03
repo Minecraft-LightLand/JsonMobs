@@ -2,8 +2,8 @@ package dev.xkmc.ymlmobs.content.skill.targeter.core;
 
 import com.mojang.datafixers.util.Either;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
-import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
-import dev.xkmc.ymlmobs.content.skill.execution.SkillInitiateData;
+import dev.xkmc.ymlmobs.content.skill.execution.context.EntityDataContext;
+import dev.xkmc.ymlmobs.content.skill.execution.context.SkillInitiateData;
 import dev.xkmc.ymlmobs.util.LevelPosYaw;
 import dev.xkmc.ymlparser.argument.Argument;
 import net.minecraft.world.entity.OwnableEntity;

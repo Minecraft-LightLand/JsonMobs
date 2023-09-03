@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.skill.execution;
+package dev.xkmc.ymlmobs.content.skill.execution.context;
 
 public class SkillTargetEntityData extends SkillModifiableData {
 

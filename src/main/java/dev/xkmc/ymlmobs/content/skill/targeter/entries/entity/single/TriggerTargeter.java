@@ -1,6 +1,6 @@
 package dev.xkmc.ymlmobs.content.skill.targeter.entries.entity.single;
 
-import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
+import dev.xkmc.ymlmobs.content.skill.execution.context.EntityDataContext;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.TargetTypes;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.TargeterContext;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.TargeterType;

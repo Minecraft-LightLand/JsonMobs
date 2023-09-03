@@ -1,7 +1,7 @@
 package dev.xkmc.ymlmobs.content.skill.condition.evaluation;
 
-import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
-import dev.xkmc.ymlmobs.content.skill.execution.SkillCaster;
+import dev.xkmc.ymlmobs.content.skill.execution.context.EntityDataContext;
+import dev.xkmc.ymlmobs.content.skill.execution.context.SkillCaster;
 import dev.xkmc.ymlmobs.util.LevelPosYaw;
 
 import javax.annotation.Nullable;

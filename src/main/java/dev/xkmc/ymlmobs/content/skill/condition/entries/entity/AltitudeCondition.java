@@ -4,7 +4,7 @@ import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionType;
 import dev.xkmc.ymlmobs.content.skill.condition.core.SkillCondition;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationType;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.IEntityCondition;
-import dev.xkmc.ymlmobs.content.skill.execution.EntityDataContext;
+import dev.xkmc.ymlmobs.content.skill.execution.context.EntityDataContext;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.primitive.calc.IRange;
 import net.minecraft.core.BlockPos;

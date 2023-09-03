@@ -1,7 +1,7 @@
 package dev.xkmc.ymlmobs.content.skill.targeter.types;
 
-import dev.xkmc.ymlmobs.content.skill.execution.SkillTargetBlockData;
-import dev.xkmc.ymlmobs.content.skill.execution.SkillTargetEntityData;
+import dev.xkmc.ymlmobs.content.skill.execution.context.SkillTargetBlockData;
+import dev.xkmc.ymlmobs.content.skill.execution.context.SkillTargetEntityData;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.TargeterContext;
 import dev.xkmc.ymlmobs.init.YmlMobs;
 import dev.xkmc.ymlmobs.util.LevelPosYaw;

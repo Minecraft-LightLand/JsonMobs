@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.skill.execution;
+package dev.xkmc.ymlmobs.content.skill.execution.sequence;
 
 public interface ExecutableEntry {
 

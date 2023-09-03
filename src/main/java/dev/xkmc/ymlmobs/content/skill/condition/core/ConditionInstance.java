@@ -2,7 +2,7 @@ package dev.xkmc.ymlmobs.content.skill.condition.core;
 
 import dev.xkmc.ymlmobs.content.skill.condition.action.RequiredAction;
 import dev.xkmc.ymlmobs.content.skill.condition.evaluation.EvaluationContext;
-import dev.xkmc.ymlmobs.content.skill.execution.*;
+import dev.xkmc.ymlmobs.content.skill.execution.context.*;
 import dev.xkmc.ymlparser.argument.EntryBuilder;
 
 public record ConditionInstance(ISkillCondition condition, ConditionAction action) {

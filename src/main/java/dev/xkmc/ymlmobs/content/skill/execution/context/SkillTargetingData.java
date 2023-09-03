@@ -1,4 +1,4 @@
-package dev.xkmc.ymlmobs.content.skill.execution;
+package dev.xkmc.ymlmobs.content.skill.execution.context;
 
 import com.mojang.datafixers.util.Either;
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;

@@ -1,8 +1,8 @@
 package dev.xkmc.ymlmobs.content.skill.core;
 
-import dev.xkmc.ymlmobs.content.skill.execution.ExecutionContext;
-import dev.xkmc.ymlmobs.content.skill.execution.ExecutionResult;
-import dev.xkmc.ymlmobs.content.skill.execution.ExecutionSequence;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionContext;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionResult;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionSequence;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.primitive.core.StaticData;

@@ -1,7 +1,12 @@
 package dev.xkmc.ymlmobs.content.skill.core;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
-import dev.xkmc.ymlmobs.content.skill.execution.*;
+import dev.xkmc.ymlmobs.content.skill.execution.context.SkillInitiateData;
+import dev.xkmc.ymlmobs.content.skill.execution.context.SkillTargetingData;
+import dev.xkmc.ymlmobs.content.skill.execution.context.TriggerContext;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionContext;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionResult;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionSequence;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.SkillTargeter;
 import dev.xkmc.ymlmobs.util.LevelPosYaw;
 import dev.xkmc.ymlparser.argument.Argument;

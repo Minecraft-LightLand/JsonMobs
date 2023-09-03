@@ -1,9 +1,9 @@
 package dev.xkmc.ymlmobs.content.skill.core;
 
-import dev.xkmc.ymlmobs.content.skill.execution.ExecutionContext;
-import dev.xkmc.ymlmobs.content.skill.execution.ExecutionResult;
-import dev.xkmc.ymlmobs.content.skill.execution.ExecutionSequence;
-import dev.xkmc.ymlmobs.content.skill.execution.PendingSkill;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionContext;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionResult;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionSequence;
+import dev.xkmc.ymlmobs.content.skill.execution.sequence.PendingSkill;
 
 import java.util.LinkedList;
 import java.util.List;
