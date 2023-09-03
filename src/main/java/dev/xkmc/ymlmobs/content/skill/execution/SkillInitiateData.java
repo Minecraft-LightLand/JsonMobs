@@ -12,7 +12,8 @@ import java.util.List;
 
 public class SkillInitiateData extends SkillModifiableData {
 
-	private final TriggerContext trigger;
+	public final TriggerContext trigger;
+
 	private final LevelPosYaw origin;
 
 	@Nullable

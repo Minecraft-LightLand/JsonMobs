@@ -1,9 +1,7 @@
 package dev.xkmc.ymlmobs.content.skill.core;
 
 import dev.xkmc.ymlmobs.content.skill.condition.core.ConditionInstance;
-import dev.xkmc.ymlmobs.content.skill.execution.SkillInitiateData;
-import dev.xkmc.ymlmobs.content.skill.execution.SkillTargetingData;
-import dev.xkmc.ymlmobs.content.skill.execution.TriggerContext;
+import dev.xkmc.ymlmobs.content.skill.execution.*;
 import dev.xkmc.ymlmobs.content.skill.targeter.core.SkillTargeter;
 import dev.xkmc.ymlmobs.util.LevelPosYaw;
 import dev.xkmc.ymlparser.argument.Argument;
@@ -107,7 +105,7 @@ public class MechanicInstance {
 		this.chance = chance;
 	}
 
-	public void run(TriggerContext trigger, @Nullable SkillTargetingData parent) {
+	public ExecutionResult run(ExecutionSequence seq, TriggerContext trigger, @Nullable SkillTargetingData parent) {
 		LevelPosYaw origin;
 		if (parent == null) {
 			origin = trigger.getCaster().pos();
@@ -126,7 +124,7 @@ public class MechanicInstance {
 			}
 		}
 		init.lock();
-		if (init.size() == 0) return;
+		if (init.size() == 0) return ExecutionResult.noTarget();
 		SkillTargetingData targeting = init.searchTarget(targeter);
 		List<ConditionInstance> targetCond = new ArrayList<>();
 		if (targeter != null) {
@@ -134,7 +132,8 @@ public class MechanicInstance {
 		}
 		targetCond.addAll(conditionsTarget);
 		targeting.filterTarget(targetCond);
-		//TODO
+		ExecutionContext ctx = new ExecutionContext(targeting, targetIsOrigin, forceSync);
+		return mechanic.run(seq, ctx);
 	}
 
 }

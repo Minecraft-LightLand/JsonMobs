@@ -1,10 +1,13 @@
 package dev.xkmc.ymlmobs.content.skill.core;
 
+import dev.xkmc.ymlmobs.content.skill.execution.ExecutionContext;
+import dev.xkmc.ymlmobs.content.skill.execution.ExecutionResult;
+import dev.xkmc.ymlmobs.content.skill.execution.ExecutionSequence;
 import dev.xkmc.ymlparser.argument.Argument;
 import dev.xkmc.ymlparser.holder.DataHolder;
 import dev.xkmc.ymlparser.primitive.core.StaticData;
 
-public class SkillMechanic {
+public abstract class SkillMechanic {
 
 	@Argument(name = "cooldown", aliases = {"cd", "Cooldown"}, optional = true, description = "The cooldown of the mechanic in seconds. Accepts decimals.")
 	protected DataHolder<Double> cooldown = new StaticData<>(0d);
@@ -35,5 +38,7 @@ public class SkillMechanic {
 
 	@Argument(name = "targetCreative", optional = true, description = "Whether to target creative players")
 	protected boolean target_creative = false;
+
+	public abstract ExecutionResult run(ExecutionSequence seq, ExecutionContext ctx);
 
 }

@@ -9,6 +9,8 @@ import dev.xkmc.ymlparser.type.DataType;
 
 public class EntityTargetFilter extends CompoundValue<EntityTargetFilter, EntityTargetFilter> {
 
+	@Argument(name = "targetself", optional = true, description = "targets caster itself. Default off (configurable).")
+	protected boolean targetSelf = YMConfig.COMMON.isTargetSelf.get();
 	@Argument(name = "targetplayers", optional = true, description = "targets player. Default on (configurable)")
 	protected boolean targetPlayers = YMConfig.COMMON.isTargetPlayers.get();
 	@Argument(name = "targetcreative", optional = true, description = "targets invulnerable. Default on (configurable)")
@@ -30,19 +32,75 @@ public class EntityTargetFilter extends CompoundValue<EntityTargetFilter, Entity
 	@Argument(name = "targetowner", optional = true, description = "targets owner. Default on (configurable)")
 	protected boolean targetOwner = YMConfig.COMMON.isTargetOwner.get();
 
+	public EntityTargetFilter() {
+
+	}
+
+	public EntityTargetFilter(String target) {
+		if (target.equalsIgnoreCase("ground")) {
+			this.targetGroundMobs = true;
+			this.targetWaterMobs = false;
+			this.targetFlyingMobs = false;
+		} else if (target.equalsIgnoreCase("water")) {
+			this.targetGroundMobs = false;
+			this.targetWaterMobs = true;
+			this.targetFlyingMobs = false;
+		} else if (target.equalsIgnoreCase("flying")) {
+			this.targetGroundMobs = false;
+			this.targetWaterMobs = false;
+			this.targetFlyingMobs = true;
+		} else {
+			this.targetPlayers = false;
+			this.targetCreativeMode = false;
+			this.targetAnimals = false;
+			this.targetCreatures = false;
+			this.targetMonsters = false;
+			if (target.contains("self") || target.contains("caster")) {
+				this.targetSelf = true;
+			}
+
+			if (target.contains("player")) {
+				this.targetPlayers = true;
+			}
+
+			if (target.contains("creative")) {
+				this.targetCreativeMode = true;
+			}
+
+			if (target.contains("flying")) {
+				this.targetMonsters = true;
+				this.targetCreatures = true;
+				this.targetFlyingMobs = true;
+			}
+
+			if (target.contains("animal")) {
+				this.targetAnimals = true;
+				this.targetCreatures = true;
+				this.targetWaterMobs = true;
+				this.targetFlyingMobs = true;
+			}
+
+			if (target.contains("monster")) {
+				this.targetMonsters = true;
+				this.targetCreatures = true;
+				this.targetWaterMobs = true;
+				this.targetFlyingMobs = true;
+			}
+
+			if (target.contains("creature")) {
+				this.targetCreatures = true;
+				this.targetWaterMobs = true;
+				this.targetFlyingMobs = true;
+			}
+		}
+	}
+
 	@Override
 	public EntityTargetFilter build() {
 		return this;
 	}
 
 	public static class Defaults implements DataType<EntityTargetFilter> {
-		public EntityTargetFilter ground() {
-			EntityTargetFilter ans = new EntityTargetFilter();
-			ans.targetGroundMobs = true;
-			ans.targetWaterMobs = false;
-			ans.targetFlyingMobs = false;
-			return ans;
-		}
 
 		@Override
 		public String name() {
@@ -51,8 +109,9 @@ public class EntityTargetFilter extends CompoundValue<EntityTargetFilter, Entity
 
 		@Override
 		public EntityTargetFilter parse(ParserLogger logger, StringElement.ListElem elem) {
-			return null;
+			return new EntityTargetFilter(elem.toString());
 		}
+
 	}
 
 }
