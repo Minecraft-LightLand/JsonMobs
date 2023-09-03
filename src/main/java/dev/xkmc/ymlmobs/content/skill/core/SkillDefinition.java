@@ -4,13 +4,21 @@ import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionContext;
 import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionResult;
 import dev.xkmc.ymlmobs.content.skill.execution.sequence.ExecutionSequence;
 import dev.xkmc.ymlmobs.content.skill.execution.sequence.PendingSkill;
+import dev.xkmc.ymlmobs.content.skill.mechanic.core.MechanicType;
+import dev.xkmc.ymlmobs.content.skill.mechanic.core.SkillType;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@MechanicType(
+		type = SkillType.META,
+		name = "metaskill",
+		description = "meta skill that holds several mechanics"
+)
 public class SkillDefinition extends SkillMechanic {
 
 	protected List<MechanicInstance> skills = new LinkedList<>();
+
 	protected boolean stopIfNoTargets = false;//TODO
 	protected boolean inlineSkill = false;//TODO
 	protected List<String> killMessages;//TODO
@@ -29,4 +37,5 @@ public class SkillDefinition extends SkillMechanic {
 		}
 		return ExecutionResult.additional(sub);
 	}
+
 }

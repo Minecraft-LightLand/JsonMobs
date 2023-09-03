@@ -20,6 +20,10 @@ public enum TargetTypes {
 		this.block = block;
 	}
 
+	public Class<?> getTypeClass(){
+		return cls;
+	}
+
 	public boolean isSingle() {
 		return single;
 	}

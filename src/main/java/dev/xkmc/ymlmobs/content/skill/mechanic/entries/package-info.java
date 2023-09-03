@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.ymlmobs.content.skill.mechanic;
+package dev.xkmc.ymlmobs.content.skill.mechanic.entries;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

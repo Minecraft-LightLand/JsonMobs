@@ -4,7 +4,8 @@ import javax.annotation.Nullable;
 
 public interface ExecutionResult {
 
-	record SingletonResult(boolean isComplete) implements ExecutionResult {
+
+	record SingletonResult(boolean succeed, boolean isComplete) implements ExecutionResult {
 
 		@Nullable
 		@Override
@@ -21,12 +22,16 @@ public interface ExecutionResult {
 			return false;
 		}
 
+		@Override
+		public boolean succeed() {
+			return true;
+		}
 	}
 
-	ExecutionResult NO_TARGET = new SingletonResult(true);
-	ExecutionResult COMPLETE = new SingletonResult(true);
-	ExecutionResult PENDING = new SingletonResult(false);
-	ExecutionResult ASYNC = new SingletonResult(false);
+	ExecutionResult NO_TARGET = new SingletonResult(false, true);
+	ExecutionResult COMPLETE = new SingletonResult(true, true);
+	ExecutionResult PENDING = new SingletonResult(true, false);
+	ExecutionResult ASYNC = new SingletonResult(true, true);
 
 	static ExecutionResult noTarget() {
 		return NO_TARGET;
@@ -49,6 +54,8 @@ public interface ExecutionResult {
 	}
 
 	boolean isComplete();
+
+	boolean succeed();
 
 	@Nullable
 	ExecutionSequence next();
